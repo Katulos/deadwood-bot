@@ -61,7 +61,7 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
-          . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && requirements.txt && aerich upgrade
+          . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && pip install -r requirements.txt && aerich upgrade
           sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
           sudo systemctl daemon-reload
           sudo systemctl enable deadwood-bot.service
