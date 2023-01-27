@@ -45,7 +45,7 @@ jobs:
           SCRIPT_BEFORE: |
             sudo systemctl stop deadwood-bot.service
             sudo systemctl disable deadwood-bot.service
-            cd ${{ secrets.REMOTE_TARGET } && tar --exclude='./venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
+            cd ${{ secrets.REMOTE_TARGET }} && tar --exclude='./venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tgz ${{ secrets.REMOTE_TARGET }}
 #          SCRIPT_AFTER: |
 #            python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
 #            sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
