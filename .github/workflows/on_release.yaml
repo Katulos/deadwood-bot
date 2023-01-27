@@ -47,7 +47,7 @@ jobs:
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.REMOTE_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
