@@ -19,19 +19,19 @@ jobs:
     - uses: actions/checkout@v1
     - name: Get current date
       id: date
-      run: echo "name=date::$(date +'%Y-%m-%d_%H%m%s')" >> $GITHUB_OUTPUT
-    - name: Backup
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-          sudo systemctl stop deadwood-bot.service
-          sudo systemctl disable deadwood-bot.service
-          tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
-      continue-on-error: true
+      run: echo "date=$(date +'%Y-%m-%d_%H_%M_%S')" >> $GITHUB_OUTPUT
+#    - name: Backup
+#      uses: appleboy/ssh-action@v0.1.7
+#      with:
+#        host: ${{ secrets.REMOTE_HOST }}
+#        username: ${{ secrets.REMOTE_USER }}
+#        key: ${{ secrets.SSH_PRIVATE_KEY }}
+#        port: ${{ secrets.REMOTE_PORT }}
+#        script: |
+#          sudo systemctl stop deadwood-bot.service
+#          sudo systemctl disable deadwood-bot.service
+#          tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
+#      continue-on-error: true
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
@@ -42,16 +42,26 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/venv/, /.venv/"
-    - name: Run service
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-          python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
-          sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
-          sudo systemctl daemon-reload
-          sudo systemctl enable deadwood-bot.service
-          sudo systemctl start deadwood-bot.service
+          SCRIPT_BEFORE: |
+            sudo systemctl stop deadwood-bot.service
+            sudo systemctl disable deadwood-bot.service
+            tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
+          SCRIPT_AFTER: |
+            python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
+            sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+            sudo systemctl daemon-reload
+            sudo systemctl enable deadwood-bot.service
+            sudo systemctl start deadwood-bot.service
+#    - name: Run service
+#      uses: appleboy/ssh-action@v0.1.7
+#      with:
+#        host: ${{ secrets.REMOTE_HOST }}
+#        username: ${{ secrets.REMOTE_USER }}
+#        key: ${{ secrets.SSH_PRIVATE_KEY }}
+#        port: ${{ secrets.REMOTE_PORT }}
+#        script: |
+#          python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
+#          sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+#          sudo systemctl daemon-reload
+#          sudo systemctl enable deadwood-bot.service
+#          sudo systemctl start deadwood-bot.service
