@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%i%s')"
+      run: echo "name=date::$(date +'%Y-%m-%d_%H%m%s')" >> $GITHUB_OUTPUT
     - name: Backup
       uses: appleboy/ssh-action@v0.1.7
       with:
@@ -31,6 +31,7 @@ jobs:
           sudo systemctl stop deadwood-bot.service
           sudo systemctl disable deadwood-bot.service
           tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
+      continue-on-error: true
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
@@ -49,6 +50,7 @@ jobs:
         key: ${{ secrets.REMOTE_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
+          python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
           sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
           sudo systemctl daemon-reload
           sudo systemctl enable deadwood-bot.service

@@ -1,0 +1,14 @@
+[Unit]
+Description=mebot
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+WorkingDirectory=/opt/deadwood-bot
+ExecStart=/bin/sh -c 'cd /opt/deadwood-bot && . venv/bin/activate && python3 -m app'
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
