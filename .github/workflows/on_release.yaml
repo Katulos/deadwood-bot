@@ -25,12 +25,12 @@ jobs:
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.REMOTE_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           sudo systemctl stop deadwood-bot.service
           sudo systemctl disable deadwood-bot.service
-          tar -cf ${{ secrets.REMOTE_TARGET }}-${{ steps.date.outputs.date }}.tar ~/
+          tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
