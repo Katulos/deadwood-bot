@@ -3,10 +3,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
-      - main
-      - 'releases/**'
-      - '!releases/**-alpha'
+      - develop
+      - dev
+#
+#    branches:
+#      - master
+#      - main
+#      - 'releases/**'
+#      - '!releases/**-alpha'
 
 jobs:
   build:
@@ -17,7 +21,7 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%i%s')"
     - name: Backup
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
@@ -38,7 +42,7 @@ jobs:
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/venv/, /.venv/"
     - name: Run service
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
