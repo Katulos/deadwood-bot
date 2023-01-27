@@ -46,23 +46,24 @@ jobs:
             sudo systemctl stop deadwood-bot.service
             sudo systemctl disable deadwood-bot.service
             cd ${{ secrets.REMOTE_TARGET }} && tar --exclude='./venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tgz ${{ secrets.REMOTE_TARGET }}
-#          SCRIPT_AFTER: |
-#            python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
-#            sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
-#            sudo systemctl daemon-reload
-#            sudo systemctl enable deadwood-bot.service
-#            sudo systemctl start deadwood-bot.service
-    - name: Run service
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-          python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
-          . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && pip install -r requirements.txt && aerich upgrade
-          sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
-          sudo systemctl daemon-reload
-          sudo systemctl enable deadwood-bot.service
-          sudo systemctl start deadwood-bot.service
+          SCRIPT_AFTER: |
+            python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
+            . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && ${{ secrets.REMOTE_TARGET }}/venv/bin/pip install -r ${{ secrets.REMOTE_TARGET }}/requirements.txt && ${{ secrets.REMOTE_TARGET }}/venv/bin/aerich upgrade
+            sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+            sudo systemctl daemon-reload
+            sudo systemctl enable deadwood-bot.service
+            sudo systemctl start deadwood-bot.service
+#    - name: Run service
+#      uses: appleboy/ssh-action@v0.1.7
+#      with:
+#        host: ${{ secrets.REMOTE_HOST }}
+#        username: ${{ secrets.REMOTE_USER }}
+#        key: ${{ secrets.SSH_PRIVATE_KEY }}
+#        port: ${{ secrets.REMOTE_PORT }}
+#        script: |
+#          python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
+#          . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && pip install -r ${{ secrets.REMOTE_TARGET }}/requirements.txt && aerich upgrade
+#          sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+#          sudo systemctl daemon-reload
+#          sudo systemctl enable deadwood-bot.service
+#          sudo systemctl start deadwood-bot.service
