@@ -1,0 +1,51 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - 'releases/**'
+      - '!releases/**-alpha'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%i%s')"
+    - name: Backup
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.REMOTE_KEY }}
+        port: ${{ secrets.REMOTE_PORT }}
+        script: |
+          sudo systemctl stop deadwood-bot.service
+          sudo systemctl disable deadwood-bot.service
+          tar -cf ${{ secrets.REMOTE_TARGET }}-${{ steps.date.outputs.date }}.tar ~/
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "./"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/venv/, /.venv/"
+    - name: Run service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.REMOTE_KEY }}
+        port: ${{ secrets.REMOTE_PORT }}
+        script: |
+          sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+          sudo systemctl daemon-reload
+          sudo systemctl enable deadwood-bot.service
+          sudo systemctl start deadwood-bot.service
