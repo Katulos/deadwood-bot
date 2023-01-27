@@ -1,0 +1,4 @@
+-r requirements.txt
+babel~=2.11
+pre-commit~=2.20
+pylint-pydantic~=0.1

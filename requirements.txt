@@ -1,0 +1,7 @@
+aerich~=0.7
+pydantic~=1.10
+pykeyboard~=0.1
+pyrogram~=2.0
+python-dotenv~=0.21
+tgcrypto~=1.2
+tortoise-orm~=0.19
