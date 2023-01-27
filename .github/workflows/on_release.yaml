@@ -41,13 +41,13 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/venv/, /.venv/"
+          EXCLUDE: "/venv/, /.venv/, /.git/, /.github/"
           SCRIPT_BEFORE: |
             sudo systemctl stop deadwood-bot.service
             sudo systemctl disable deadwood-bot.service
             tar -cf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tar ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
-            python3 python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
+            python3 -m venv ${{ secrets.REMOTE_TARGET }}/.venv
             sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
             sudo systemctl daemon-reload
             sudo systemctl enable deadwood-bot.service
