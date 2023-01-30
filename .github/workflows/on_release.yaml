@@ -32,7 +32,7 @@ jobs:
           REDIS_URL=${{ secrets.REDIS_URL }}
         write-mode: overwrite
     - name: Replace systemd unit file
-      uses: datamonsters/replace-action
+      uses: datamonsters/replace-action@master
       with:
         files: 'deadwood-bot.service'
         replacements: '$REMOTE_TARGET=${{ secrets.REMOTE_TARGET }}'
