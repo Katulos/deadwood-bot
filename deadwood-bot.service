@@ -1,0 +1,14 @@
+[Unit]
+Description=deadwood-bot
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+WorkingDirectory=$REMOTE_TARGET
+ExecStart=/bin/sh -c 'cd $REMOTE_TARGET && . venv/bin/activate && python3 -m app'
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
