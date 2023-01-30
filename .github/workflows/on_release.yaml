@@ -50,11 +50,11 @@ jobs:
             sudo systemctl disable deadwood-bot.service
             tar --exclude='${{ secrets.REMOTE_TARGET }}/venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tgz ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
+            chmod 0777 ${{ secrets.REMOTE_TARGET }}/data
             python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
             . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && \
             ${{ secrets.REMOTE_TARGET }}/venv/bin/pip install -r ${{ secrets.REMOTE_TARGET }}/requirements.txt && \
             ${{ secrets.REMOTE_TARGET }}/venv/bin/aerich upgrade
-            chmod 0777 ${{ secrets.REMOTE_TARGET }}/data
             sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
             sudo systemctl daemon-reload
             sudo systemctl enable deadwood-bot.service
