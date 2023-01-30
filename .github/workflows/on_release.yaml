@@ -33,11 +33,13 @@ jobs:
           REDIS_URL=${{ secrets.REDIS_URL }}
         write-mode: overwrite
     - name: Replace systemd unit file
-      uses: jacobtomlinson/gha-find-replace@v2
-      with:
-        find: "$REMOTE_TARGET"
-        include: 'deadwood-bot.service'
-        replace: ${{ secrets.REMOTE_TARGET }}
+      run: |
+        sed -i 's|$REMOTE_TARGET|${{ secrets.REMOTE_TARGET }}|g' deadwood-bot.service
+#      uses: jacobtomlinson/gha-find-replace@v2
+#      with:
+#        find: '$REMOTE_TARGET'
+#        include: '**deadwood-bot.service'
+#        replace: '${{ secrets.REMOTE_TARGET }}'
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
@@ -55,7 +57,8 @@ jobs:
             tar --exclude='${{ secrets.REMOTE_TARGET }}/venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tgz ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
             python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
-            . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && ${{ secrets.REMOTE_TARGET }}/venv/bin/pip install -r ${{ secrets.REMOTE_TARGET }}/requirements.txt
+            . ${{ secrets.REMOTE_TARGET }}/venv/bin/activate && \
+            ${{ secrets.REMOTE_TARGET }}/venv/bin/pip install -r ${{ secrets.REMOTE_TARGET }}/requirements.txt
             sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
             sudo systemctl daemon-reload
             sudo systemctl enable deadwood-bot.service
