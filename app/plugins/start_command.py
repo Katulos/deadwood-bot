@@ -10,10 +10,8 @@ from app.bot import command
 @Client.on_message(command(["start"]) & (filters.group | filters.private))
 async def start_command_handler(client: Client, message: Message) -> None:
     await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
-    await asyncio.sleep(2)
-    msg = await message.reply(_("Hi!"))
-    # pylint:disable=duplicate-code
-    await asyncio.sleep(2)
+    await asyncio.sleep(3)
+    msg = await message.reply(_("Start your anus, dog"))
     try:
         await client.delete_messages(
             chat_id=message.chat.id,
