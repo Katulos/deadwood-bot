@@ -7,6 +7,7 @@ from app import _, logger
 from app.bot import command
 
 
+# pylint: disable=no-member
 @Client.on_message(command(["start"]) & (filters.group | filters.private))
 async def start_command_handler(client: Client, message: Message) -> None:
     await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
