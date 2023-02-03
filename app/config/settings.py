@@ -43,6 +43,10 @@ class Settings(BaseSettings):
     # redis
     REDIS_URL: str = Field(default="redis://redis:6379", env="REDIS_URL")
 
+    ROOT_PATH = Path(__file__).resolve().parent.parent.parent
+
+    STATIC_PATH = os.path.join(ROOT_PATH, "static")
+
     class Config:
         case_sensitive: bool = True
         env_file = (
@@ -69,5 +73,7 @@ class Settings(BaseSettings):
                 ["CB_SECONDS"],
                 ["DATABASE_URL"],
                 ["REDIS_URL"],
+                ["ROOT_PATH"],
+                ["STATIC_PATH"],
             )
         }
