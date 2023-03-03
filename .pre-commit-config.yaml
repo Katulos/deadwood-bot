@@ -92,9 +92,12 @@ repos:
         additional_dependencies:
           [
               "aerich~=0.7",
+              "aiohttp~=3.8",
+              "cashews~=5.3",
+              "diskcache~=5.4",
               "pydantic~=1.10",
+              "pylint_pydantic~=0.1",
               "pykeyboard~=0.1",
-              "pylint-pydantic~=0.1",
               "pyrogram~=2.0",
               "python-dotenv~=0.21",
               "tgcrypto~=1.2",

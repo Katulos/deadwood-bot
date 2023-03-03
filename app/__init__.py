@@ -4,6 +4,7 @@ import gettext
 import logging
 import os.path
 from pathlib import Path
+from cashews import Cache
 
 import dotenv
 from .config import shared
@@ -29,6 +30,9 @@ _ = t.gettext
 dotenv_file = Path(__file__).resolve().parent.parent / ".env"
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
+
+cache = Cache()
+cache.setup("disk://?directory=" + shared.settings.CACHE_URL)
 
 TORTOISE_ORM = {
     "connections": {"default": shared.settings.DATABASE_URL},

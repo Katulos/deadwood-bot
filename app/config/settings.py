@@ -45,6 +45,12 @@ class Settings(BaseSettings):
 
     ROOT_PATH = Path(__file__).resolve().parent.parent.parent
 
+    # Cache
+    CACHE_URL: str = Field(
+        default=os.path.join(ROOT_PATH, "data/cache"),
+        env="CACHE_URL",
+    )
+
     STATIC_PATH = os.path.join(ROOT_PATH, "static")
 
     class Config:
@@ -71,6 +77,7 @@ class Settings(BaseSettings):
                 ["MESSAGES"],
                 ["SECONDS"],
                 ["CB_SECONDS"],
+                ["CACHE_URL"],
                 ["DATABASE_URL"],
                 ["REDIS_URL"],
                 ["ROOT_PATH"],

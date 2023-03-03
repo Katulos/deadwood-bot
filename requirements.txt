@@ -1,4 +1,7 @@
 aerich~=0.7
+aiohttp~=3.8
+cashews~=5.3
+diskcache~=5.4
 pydantic~=1.10
 pykeyboard~=0.1
 pyrogram~=2.0
