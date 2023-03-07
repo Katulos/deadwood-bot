@@ -23,11 +23,13 @@ async def me_command_handler(client: Client, message: Message) -> None:
                 await message.reply(
                     f"* <b>{message.from_user.mention}</b> {s}",
                     reply_to_message_id=message.reply_to_message_id,
+                    protect_content=True,
                 )
             else:
                 await client.send_message(
                     message.chat.id,
                     f"* <b>{message.from_user.mention}</b> {s}",
+                    protect_content=True,
                 )
         else:
             return

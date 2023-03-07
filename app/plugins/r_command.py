@@ -55,4 +55,6 @@ async def r_command_handler(client: Client, message: Message) -> None:
 async def fetch(request) -> Any:
     reddit = RedditWrapper()
     media = await reddit.fetch(request)
+    if not media:
+        raise RedditException("Use another tag, Luke")
     return media

@@ -3,11 +3,12 @@ import random
 from typing import Any
 
 import aiohttp
+import pyrogram
 from aiohttp import ClientSession
-from pyrogram import Client, errors
+from pyrogram import Client, enums
 from pyrogram.types import Message
 
-from app import cache
+from app import cache, logger
 from app.bot import command
 
 
@@ -27,25 +28,32 @@ async def hc_command_handler(client: Client, message: Message) -> None:
     await session.close()
     url_parts = random.choice(tuple(content))
     try:
-        msg = await client.send_photo(
-            chat_id=message.chat.id,
-            photo=f"https://i.4cdn.org/hc/{url_parts[0]}{url_parts[1]}",
-            protect_content=True,
-            has_spoiler=True,
-            reply_to_message_id=message.reply_to_message_id
-            if message.reply_to_message
-            else message.id,
+        await client.send_chat_action(
+            message.chat.id,
+            enums.ChatAction.TYPING,
         )
-        await asyncio.sleep(10)
+        await asyncio.sleep(random.randint(3, 6))
+        msg = await message.reply(
+            f"https://i.4cdn.org/hc/{url_parts[0]}{url_parts[1]}",  # url
+            reply_to_message_id=(
+                message.reply_to_message_id
+                if message.reply_to_message
+                else message.id
+            ),
+            protect_content=True,
+        )
+        await asyncio.sleep(random.randint(10, 20))
         await client.delete_messages(
             chat_id=message.chat.id,
-            message_ids=[message.id, msg.id],
+            message_ids=[msg.id, message.id],
         )
-    except errors.WebpageMediaEmpty:
+    except pyrogram.errors.WebpageMediaEmpty:
         await client.delete_messages(
             chat_id=message.chat.id,
             message_ids=[message.id],
         )
+    except pyrogram.errors.MessageDeleteForbidden as e:
+        logger.error(e)
 
 
 @cache.failover(ttl="1h")

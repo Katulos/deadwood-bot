@@ -47,12 +47,13 @@ class RedditWrapper:
                     kwds = " ".join(keywords.split("+"))
                     raise RedditException(
                         f"Nothing found in subreddit '{sub}'"
-                        f" with keywords {kwds}",
+                        f" with keywords '{kwds}'",
                     )
             else:
                 subreddit = await self.reddit.subreddit(sub)
                 data = [
-                    [u.title, u.url] async for u in subreddit.top(limit=500)
+                    [u.title, u.url]
+                    async for u in subreddit.top(limit=500, time_filter="day")
                 ]
                 if not data:
                     await self._close_connection()
@@ -89,6 +90,10 @@ class RedditWrapper:
                 if url.endswith(".gifv"):
                     url = url.replace(".gifv", ".mp4")
                 data.append([url, title])
+        if not data:
+            raise RedditException(
+                "Looks like subreddit is empty",
+            )
         return data
 
     async def _close_connection(self):

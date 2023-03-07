@@ -23,8 +23,8 @@ async def on_covid_handler(client: Client, message: Message):
             reply_to_message_id=message.id,
         )
     except errors.WebpageCurlFailed as e:
-        message.reply(_("Great news! You have COVID!"))
+        message.reply(_("Great news! You have COVID!"), protect_content=True)
         logger.error(e)
     except errors.MediaEmpty as e:
-        message.reply(_("Great news! You have COVID!"))
+        message.reply(_("Great news! You have COVID!"), protect_content=True)
         logger.error(e)
