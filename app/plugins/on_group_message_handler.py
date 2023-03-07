@@ -9,7 +9,7 @@ from app.plugins.on_flood_handler import BANNED_USERS
 from app.utils.utils import reload_admins, update_chat_member
 
 
-@Client.on_message(filters.group & ~BANNED_USERS)
+@Client.on_message(filters.group & ~BANNED_USERS, group=1000)
 async def on_group_message_handler(client: Client, message: Message) -> None:
     chat = await Chat.get_or_none(id=message.chat.id)
     if chat is None:

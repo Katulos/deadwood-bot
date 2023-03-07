@@ -93,6 +93,8 @@ repos:
           [
               "aerich~=0.7",
               "aiohttp~=3.8",
+              "asyncpraw~=7.7",
+              "asyncprawcore~=2.3",
               "cashews~=5.3",
               "diskcache~=5.4",
               "pydantic~=1.10",

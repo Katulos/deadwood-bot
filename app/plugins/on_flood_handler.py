@@ -41,8 +41,8 @@ async def is_flood(
         return True
 
 
-@Client.on_message((filters.private | filters.group) & ~ADMINS)
-@Client.on_callback_query(~ADMINS)
+@Client.on_message((filters.private | filters.group) & ~ADMINS, group=-100)
+@Client.on_callback_query(~ADMINS, group=-100)
 async def on_flood_handler(
     client: Client,
     update: types.Message | types.CallbackQuery,
