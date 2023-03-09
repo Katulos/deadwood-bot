@@ -43,6 +43,21 @@ class Settings(BaseSettings):
     # redis
     REDIS_URL: str = Field(default="redis://redis:6379", env="REDIS_URL")
 
+    ROOT_PATH = Path(__file__).resolve().parent.parent.parent
+
+    # Cache
+    CACHE_URL: str = Field(
+        default=os.path.join(ROOT_PATH, "data/cache"),
+        env="CACHE_URL",
+    )
+
+    STATIC_PATH = os.path.join(ROOT_PATH, "static")
+
+    # Reddit
+    REDDIT_ID: str = Field(env="REDDIT_ID")
+    REDDIT_SECRET: str = Field(env="REDDIT_SECRET")
+    REDDIT_TOKEN: str = Field(env="REDDIT_TOKEN")
+
     class Config:
         case_sensitive: bool = True
         env_file = (
@@ -67,7 +82,13 @@ class Settings(BaseSettings):
                 ["MESSAGES"],
                 ["SECONDS"],
                 ["CB_SECONDS"],
+                ["CACHE_URL"],
                 ["DATABASE_URL"],
                 ["REDIS_URL"],
+                ["ROOT_PATH"],
+                ["STATIC_PATH"],
+                ["REDDIT_ID"],
+                ["REDDIT_SECRET"],
+                ["REDDIT_TOKEN"],
             )
         }

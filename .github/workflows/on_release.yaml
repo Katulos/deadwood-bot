@@ -31,6 +31,9 @@ jobs:
           PHONE=${{ secrets.PHONE }}
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           REDIS_URL=${{ secrets.REDIS_URL }}
+          REDDIT_ID=${{ secrets.REDDIT_ID }}
+          REDDIT_SECRET=${{ secrets.REDDIT_SECRET }}
+          REDDIT_TOKEN=${{ secrets.REDDIT_TOKEN }}
         write-mode: overwrite
     - name: Replace systemd unit file
       run: |

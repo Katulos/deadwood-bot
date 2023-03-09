@@ -168,3 +168,7 @@ cython_debug/
 *.session-shm
 *.session-wal
 *.session-journal
+
+data/
+!data/.gitkeep
+!data/cache/.gitkeep

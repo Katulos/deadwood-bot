@@ -6,6 +6,7 @@ from app.models import Chat
 from app.utils.utils import reload_admins, update_chat_member
 
 
+# pylint: disable=no-member
 @Client.on_message(filters.new_chat_members)
 async def on_join_handler(client: Client, message: Message) -> None:
     await Chat.update_or_create(id=message.chat.id, name=message.chat.title)
