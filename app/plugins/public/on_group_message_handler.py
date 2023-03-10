@@ -5,7 +5,7 @@ from pyrogram.types import Message
 from tortoise import timezone
 
 from app.models import Chat
-from app.plugins.on_flood_handler import BANNED_USERS
+from app.plugins.public.on_flood_handler import BANNED_USERS
 from app.utils.utils import reload_admins, update_chat_member
 
 
