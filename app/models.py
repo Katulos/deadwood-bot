@@ -24,6 +24,7 @@ async def chat_post_delete(
 ) -> None:
     # pylint: disable=unused-argument
     await ChatMember.filter(chat_id=instance.id).delete()
+    await ChatStatistic.filter(chat_id=instance.id).delete()
 
 
 class ChatMember(Model):
@@ -35,3 +36,29 @@ class ChatMember(Model):
 
     class Meta:
         table = "chat_member"
+
+
+class ChatStatistic(Model):
+    user_id = fields.BigIntField()
+    chat_id = fields.BigIntField()
+    animation_count = fields.BigIntField(default=0)
+    audio_count = fields.BigIntField(default=0)
+    command_count = fields.BigIntField(default=0)
+    contact_count = fields.BigIntField(default=0)
+    dice_count = fields.BigIntField(default=0)
+    document_count = fields.BigIntField(default=0)
+    forward_count = fields.BigIntField(default=0)
+    location_count = fields.BigIntField(default=0)
+    photo_count = fields.BigIntField(default=0)
+    pinned_message_count = fields.BigIntField(default=0)
+    poll_count = fields.BigIntField(default=0)
+    reaction_count = fields.BigIntField(default=0)
+    sticker_count = fields.BigIntField(default=0)
+    video_count = fields.BigIntField(default=0)
+    voice_count = fields.BigIntField(default=0)
+    message_count = fields.BigIntField(default=0)
+    word_count = fields.BigIntField(default=0)
+    letter_count = fields.BigIntField(default=0)
+
+    class Meta:
+        table = "chat_statistic"

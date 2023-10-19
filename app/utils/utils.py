@@ -6,10 +6,41 @@ from datetime import timedelta
 
 from pyrogram import enums
 from pyrogram.errors import FloodWait
+from pyrogram.types import Message
 from tortoise import timezone
+from tortoise.expressions import F
 
 from app import logger
-from app.models import Chat, ChatMember
+from app.models import Chat, ChatMember, ChatStatistic
+
+
+async def update_statistic(message: Message):
+    if message.text is not None:
+        words = re.split(r"[,\s]\s*", message.text)
+        word_count = len(words)
+        letter_count = len(message.text)
+    else:
+        word_count = 0
+        letter_count = 0
+
+    await ChatStatistic.filter(
+        chat_id=message.chat.id,
+        user_id=message.from_user.id,
+    ).update(
+        animation_count=F("animation_count")
+        + (1 if message.animation is not None else 0),
+        audio_count=F("audio_count") + (1 if message.audio is not None else 0),
+        forward_count=F("forward_count")
+        + (1 if message.forward_date is not None else 0),
+        photo_count=F("photo_count") + (1 if message.photo is not None else 0),
+        sticker_count=F("sticker_count")
+        + (1 if message.sticker is not None else 0),
+        video_count=F("video_count") + (1 if message.video is not None else 0),
+        voice_count=F("voice_count") + (1 if message.voice is not None else 0),
+        message_count=F("message_count") + 1,
+        word_count=F("word_count") + word_count,
+        letter_count=F("letter_count") + letter_count,
+    )
 
 
 async def update_chat_member(chat_id: int, user_id: int, **kwargs):
