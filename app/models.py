@@ -38,6 +38,19 @@ class ChatMember(Model):
         table = "chat_member"
 
 
+@post_delete(ChatMember)
+async def member_post_delete(
+    sender: type[ChatMember],
+    instance: ChatMember,
+    using_db: BaseDBAsyncClient | None,
+) -> None:
+    # pylint: disable=unused-argument
+    await ChatStatistic.filter(
+        chat_id=instance.chat_id,
+        user_id=instance.user_id,
+    ).delete()
+
+
 class ChatStatistic(Model):
     user_id = fields.BigIntField()
     chat_id = fields.BigIntField()

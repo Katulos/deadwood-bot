@@ -4,13 +4,18 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from tortoise import timezone
 
-from app.models import Chat, ChatStatistic
+from app.models import Chat
 from app.plugins.public.on_flood_handler import BANNED_USERS
 from app.utils.utils import reload_admins, update_chat_member, update_statistic
 
 
-@Client.on_message(filters.group & ~BANNED_USERS, group=1000)
-@Client.on_edited_message(filters.group & ~BANNED_USERS, group=1000)
+@Client.on_message(
+    filters.group
+    & ~BANNED_USERS
+    & ~filters.new_chat_members
+    & ~filters.left_chat_member,
+    group=1000,
+)
 async def on_group_message_handler(client: Client, message: Message) -> None:
     chat = await Chat.get_or_none(id=message.chat.id)
     if chat is None:
@@ -18,17 +23,13 @@ async def on_group_message_handler(client: Client, message: Message) -> None:
             id=message.chat.id,
             name=message.chat.title,
         )
-        await ChatStatistic.update_or_create(
-            chat_id=message.chat.id,
-            user_id=message.from_user.id,
-        )
         await reload_admins(client, message.chat.id)
     else:
-        await update_statistic(message=message)
         await update_chat_member(
             chat_id=message.chat.id,
             user_id=message.from_user.id,
         )
+        await update_statistic(message=message)
         last_update = chat.last_admins_update
         if timezone.now() - last_update > timedelta(hours=1):
             await reload_admins(client, message.chat.id)

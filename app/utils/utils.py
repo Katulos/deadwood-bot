@@ -50,6 +50,11 @@ async def update_chat_member(chat_id: int, user_id: int, **kwargs):
         user_id=user_id,
         defaults=kwargs,
     )
+    await ChatStatistic.update_or_create(
+        chat_id=chat_id,
+        user_id=user_id,
+        defaults=kwargs,
+    )
 
 
 async def chat_admins(chat_id: int):
