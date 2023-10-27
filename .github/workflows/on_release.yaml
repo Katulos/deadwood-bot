@@ -2,45 +2,45 @@ name: Deploy
 
 on:
   push:
-#    branches:
-#      - develop
-#      - dev
+    #    branches:
+    #      - develop
+    #      - dev
 
     branches:
       - master
       - main
-      - 'releases/**'
-      - '!releases/**-alpha'
+      - "releases/**"
+      - "!releases/**-alpha"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Get current date
-      id: date
-      run: echo "date=$(date +'%Y-%m-%d_%H_%M_%S')" >> $GITHUB_OUTPUT
-    - name: Create env file
-      uses: DamianReeves/write-file-action@master
-      with:
-        path: '.env'
-        contents: |
-          API_ID=${{ secrets.API_ID }}
-          API_HASH=${{ secrets.API_HASH }}
-          BOT_TOKEN=${{ secrets.BOT_TOKEN }}
-          PHONE=${{ secrets.PHONE }}
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
-          REDIS_URL=${{ secrets.REDIS_URL }}
-          REDDIT_ID=${{ secrets.REDDIT_ID }}
-          REDDIT_SECRET=${{ secrets.REDDIT_SECRET }}
-          REDDIT_TOKEN=${{ secrets.REDDIT_TOKEN }}
-        write-mode: overwrite
-    - name: Replace systemd unit file
-      run: |
-        sed -i 's|$REMOTE_TARGET|${{ secrets.REMOTE_TARGET }}|g' deadwood-bot.service
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@main
-      env:
+      - uses: actions/checkout@v2
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d_%H_%M_%S')" >> $GITHUB_OUTPUT
+      - name: Create env file
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: ".env"
+          contents: |
+            API_ID=${{ secrets.API_ID }}
+            API_HASH=${{ secrets.API_HASH }}
+            BOT_TOKEN=${{ secrets.BOT_TOKEN }}
+            PHONE=${{ secrets.PHONE }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            REDIS_URL=${{ secrets.REDIS_URL }}
+            REDDIT_ID=${{ secrets.REDDIT_ID }}
+            REDDIT_SECRET=${{ secrets.REDDIT_SECRET }}
+            REDDIT_TOKEN=${{ secrets.REDDIT_TOKEN }}
+          write-mode: overwrite
+      - name: Replace systemd unit file
+        run: |
+          sed -i 's|$REMOTE_TARGET|${{ secrets.REMOTE_TARGET }}|g' deadwood-bot.service
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
           SOURCE: "./"
