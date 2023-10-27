@@ -2,12 +2,26 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from pydantic import BaseSettings, Field
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 class Settings(BaseSettings):
+
+    model_config = SettingsConfigDict(
+        case_sensitive=True,
+        env_file=(
+            ".env",
+            ".env.prod",
+            ".env.production",
+            ".env.dev",
+            ".env.develop",
+        ),
+        env_file_encoding="utf-8",
+    )
+
     DEBUG: bool = Field(default=False, env="DEBUG")
 
     # Pyrogram
@@ -20,6 +34,7 @@ class Settings(BaseSettings):
     # pylint: disable=consider-alternative-union-syntax
     PHONE: Optional[str] = Field(
         env="PHONE",
+        default="",
     )
     LOCALE: str = Field(env="LOCALE", default="en_US")
     SESSION_URL: str = Field(
@@ -28,14 +43,17 @@ class Settings(BaseSettings):
     )
     TEST_ENV: bool = Field(default=False, env="TEST_ENV")
 
-    ADMIN: Optional[int]  # pylint: disable=consider-alternative-union-syntax
+    ADMIN: Optional[str] = Field(
+        env="ADMIN",
+        default="",
+    )
 
     # Antiflood
-    MESSAGES = Field(3)
+    MESSAGES: int = Field(3)
     # Rate limit (N) messages every x seconds
-    SECONDS = Field(15)
+    SECONDS: int = Field(15)
     # Rate limit x messages every (N) seconds
-    CB_SECONDS = Field(15)
+    CB_SECONDS: int = Field(15)
     # Rate limit x callback queries every (N) seconds
 
     # Database
@@ -43,7 +61,7 @@ class Settings(BaseSettings):
     # redis
     REDIS_URL: str = Field(default="redis://redis:6379", env="REDIS_URL")
 
-    ROOT_PATH = Path(__file__).resolve().parent.parent.parent
+    ROOT_PATH: Path = Path(__file__).resolve().parent.parent.parent
 
     # Cache
     CACHE_URL: str = Field(
@@ -51,44 +69,9 @@ class Settings(BaseSettings):
         env="CACHE_URL",
     )
 
-    STATIC_PATH = os.path.join(ROOT_PATH, "static")
+    STATIC_PATH: str = os.path.join(ROOT_PATH, "static")
 
     # Reddit
     REDDIT_ID: str = Field(env="REDDIT_ID")
     REDDIT_SECRET: str = Field(env="REDDIT_SECRET")
     REDDIT_TOKEN: str = Field(env="REDDIT_TOKEN")
-
-    class Config:
-        case_sensitive: bool = True
-        env_file = (
-            ".env",
-            ".env.prod",
-            ".env.production",
-            ".env.dev",
-            ".env.develop",
-        )
-        env_file_encoding = "utf-8"
-        fields = {
-            x[0]: {"env": x}
-            for x in (
-                ["ADMIN"],
-                ["API_ID"],
-                ["API_HASH"],
-                ["BOT_TOKEN"],
-                ["PHONE"],
-                ["LOCALE"],
-                ["SESSION_URL"],
-                ["TEST_ENV"],
-                ["MESSAGES"],
-                ["SECONDS"],
-                ["CB_SECONDS"],
-                ["CACHE_URL"],
-                ["DATABASE_URL"],
-                ["REDIS_URL"],
-                ["ROOT_PATH"],
-                ["STATIC_PATH"],
-                ["REDDIT_ID"],
-                ["REDDIT_SECRET"],
-                ["REDDIT_TOKEN"],
-            )
-        }

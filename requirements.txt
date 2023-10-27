@@ -70,9 +70,11 @@ pyaes==1.6.1
 pydantic==2.4.2
     # via
     #   aerich
-    #   deadwood-bot (pyproject.toml)
+    #   pydantic-settings
 pydantic-core==2.10.1
     # via pydantic
+pydantic-settings==2.0.3
+    # via deadwood-bot (pyproject.toml)
 pykeyboard==0.1.5
     # via deadwood-bot (pyproject.toml)
 pypika-tortoise==0.1.6
@@ -84,7 +86,9 @@ pyrogram==2.0.106
 pysocks==1.7.1
     # via pyrogram
 python-dotenv==0.21.1
-    # via deadwood-bot (pyproject.toml)
+    # via
+    #   deadwood-bot (pyproject.toml)
+    #   pydantic-settings
 pytz==2023.3.post1
     # via tortoise-orm
 requests==2.31.0

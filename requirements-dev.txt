@@ -119,13 +119,14 @@ pydantic==2.4.2
     # via
     #   aerich
     #   bump-my-version
-    #   deadwood-bot (pyproject.toml)
     #   pydantic-settings
     #   pylint-pydantic
 pydantic-core==2.10.1
     # via pydantic
 pydantic-settings==2.0.3
-    # via bump-my-version
+    # via
+    #   bump-my-version
+    #   deadwood-bot (pyproject.toml)
 pygments==2.16.1
     # via rich
 pykeyboard==0.1.5
