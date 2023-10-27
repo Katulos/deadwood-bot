@@ -10,6 +10,7 @@ authors = [
     { name = "Katulos", email = "katulos@protonmail.com" },
     { name = "Davide Galilei", email = "davidegalilei2018@gmail.com" }
 ]
+
 readme = "README.md"
 requires-python = ">=3.7"
 dynamic = ["version"]
@@ -83,6 +84,9 @@ values = ["release", "dev"]
 
 [[tool.bumpversion.files]]
 filename = "app/__init__.py"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
 
 
 [tools.flake8]
