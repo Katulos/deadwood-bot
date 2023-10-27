@@ -6,7 +6,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "deadwood-bot"
-authors = [{ name = "Katulos", email = "katulos@protonmail.com" }]
+authors = [
+    { name = "Katulos", email = "katulos@protonmail.com" },
+    { name = "Davide Galilei", email = "davidegalilei2018@gmail.com" }
+]
 readme = "README.md"
 requires-python = ">=3.7"
 dynamic = ["version"]
