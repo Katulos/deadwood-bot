@@ -59,6 +59,7 @@ importlib-metadata==6.7.0
     # via
     #   attrs
     #   click
+    #   deadwood-bot (pyproject.toml)
 iso8601==1.1.0
     # via tortoise-orm
 multidict==6.0.4

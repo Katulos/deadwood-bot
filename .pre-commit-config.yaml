@@ -122,25 +122,24 @@ repos:
         name: pylint with optional checks
         additional_dependencies:
           [
-            "aerich~=0.7",
-            "aiohttp~=3.8",
-            "asyncpraw~=7.7",
-            "asyncprawcore~=2.3",
-            "cashews~=5.3",
-            "diskcache~=5.4",
-            "pydantic~=1.10",
-            "pylint_pydantic~=0.1",
-            "pykeyboard~=0.1",
-            "pyrogram~=2.0",
-            "python-dotenv~=0.21",
-            "tgcrypto~=1.2",
-            "tortoise-orm~=0.19",
+            "aerich==0.7.2",
+            "aiohttp==3.8.6",
+            "asyncpraw==7.7.1",
+            "asyncprawcore==2.3.0",
+            "cashews==5.3.2",
+            "diskcache==5.6.3",
+            "pydantic-settings==2.0.3",
+            "pylint-pydantic==0.2.4",
+            "pykeyboard==0.1.5",
+            "pyrogram==2.0.106",
+            "python-dotenv==0.21.1",
+            "tgcrypto==1.2.5",
+            "importlib-metadata==6.7.0",
           ]
         args:
           [
             "--rcfile=.pylintrc",
-            "--load-plugins",
-            "pylint_pydantic",
+            "--load-plugins=pylint_pydantic",
             "--exit-zero",
           ]
         exclude: ^migrations/

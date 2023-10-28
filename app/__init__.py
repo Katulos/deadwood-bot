@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-import importlib.metadata
-
 import gettext
 import logging
 import os.path
 from pathlib import Path
-from cashews import Cache
 
 import dotenv
-from .config import shared
+from cashews import Cache
+from importlib_metadata import version
 
+from .config import shared
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -48,4 +47,4 @@ TORTOISE_ORM = {
 }
 
 
-__version__ = importlib.metadata.version(__package__ or __name__)
+__version__ = version(__package__ or __name__)
