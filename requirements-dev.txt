@@ -82,7 +82,6 @@ importlib-metadata==6.7.0
     #   attrs
     #   build
     #   click
-    #   deadwood-bot (pyproject.toml)
     #   pre-commit
     #   rich-click
     #   virtualenv

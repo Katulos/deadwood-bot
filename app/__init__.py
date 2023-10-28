@@ -7,7 +7,6 @@ from pathlib import Path
 
 import dotenv
 from cashews import Cache
-from importlib_metadata import version
 
 from .config import shared
 
@@ -47,4 +46,4 @@ TORTOISE_ORM = {
 }
 
 
-__version__ = version(__package__ or __name__)
+__version__ = "0.0.3"

@@ -134,7 +134,6 @@ repos:
             "pyrogram==2.0.106",
             "python-dotenv==0.21.1",
             "tgcrypto==1.2.5",
-            "importlib-metadata==6.7.0",
           ]
         args:
           [
