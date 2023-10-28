@@ -72,6 +72,8 @@ class ChatStatistic(Model):
     message_count = fields.BigIntField(default=0)
     word_count = fields.BigIntField(default=0)
     letter_count = fields.BigIntField(default=0)
+    created_at = fields.DatetimeField(auto_now_add=True)
+    updated_at = fields.DatetimeField(auto_now=True)
 
     class Meta:
         table = "chat_statistic"

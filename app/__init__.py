@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import importlib.metadata
+
 import gettext
 import logging
 import os.path
@@ -46,4 +48,4 @@ TORTOISE_ORM = {
 }
 
 
-__version__: str = "0.0.3"
+__version__ = importlib.metadata.version(__package__ or __name__)

@@ -1,21 +1,16 @@
 [build-system]
-requires = [
-    "setuptools"
-]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "deadwood-bot"
+version ="0.0.3"
 authors = [
     { name = "Katulos", email = "katulos@protonmail.com" },
     { name = "Davide Galilei", email = "davidegalilei2018@gmail.com" }
 ]
-
-readme = "README.md"
 requires-python = ">=3.7"
-dynamic = ["version"]
-
-
+dynamic = ["readme"]
 dependencies = [
     "aerich==0.7.2",
     "aiohttp==3.8.6",
@@ -30,6 +25,9 @@ dependencies = [
     "tgcrypto==1.2.5",
 ]
 
+[tool.setuptools.dynamic]
+readme = {file = ["README.md", "README.rst", "USAGE.rst"]}
+
 [project.optional-dependencies]
 dev = [
     "babel==2.11.0",
@@ -41,7 +39,7 @@ dev = [
 test = []
 
 [tool.setuptools]
-py-modules = ['app']
+packages = ["app"]
 
 [tool.aerich]
 tortoise_orm = "app.TORTOISE_ORM"
@@ -76,18 +74,13 @@ exclude = '''
 current_version = "0.0.3"
 commit = true
 tag = false
-
 message = "Bump version: {current_version} -> {new_version}"
 
 [tool.bumpversion.parts.dev]
 values = ["release", "dev"]
 
 [[tool.bumpversion.files]]
-filename = "app/__init__.py"
-
-[[tool.bumpversion.files]]
 filename = "pyproject.toml"
-
 
 [tools.flake8]
 ignore = ["E203", "E266", "E501", "W503", "F403", "F401"]
