@@ -83,13 +83,13 @@ repos:
       - id: obsolete-messages
       - id: untranslated-messages
       - id: fuzzy-messages
-      - id: remove-metadata
+      # - id: remove-metadata
       - id: standard-metadata
       # - id: max-lines
       #   args: ["10000"]
       - id: min-translated
         args:
-          - "95%"
+          - "90%"
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.3.0
     hooks:

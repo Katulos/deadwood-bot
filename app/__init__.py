@@ -23,7 +23,7 @@ t = gettext.translation(
 )
 
 _ = t.gettext
-_n = t.ngettext
+ngettext = t.ngettext
 
 
 # Load env variables from file
