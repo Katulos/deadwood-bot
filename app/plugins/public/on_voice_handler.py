@@ -31,7 +31,7 @@ async def on_voice_handler(client: Client, message: Message):
         await asyncio.sleep(random_int)
         await client.send_voice(
             chat_id=message.chat.id,
-            voice=static_path + "/reactions/no-voice-message-alla1.ogg",
+            voice=static_path + "/reactions/no-voice-message-alla2.ogg",
             protect_content=True,
             reply_to_message_id=message.id,
         )

@@ -5,6 +5,7 @@ from app import logger
 from app.models import Chat, ChatMember
 
 
+# pylint: disable=no-member
 @Client.on_message(filters.left_chat_member)
 async def on_left_handler(client: Client, message: Message) -> None:
     try:

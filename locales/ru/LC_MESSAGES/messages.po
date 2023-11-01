@@ -1,0 +1,118 @@
+# Russian translations for deadwood-bot.
+# Copyright (C) 2023 Katulos
+# This file is distributed under the same license as the deadwood-bot project.
+# Katulos <katulos@protonmail.com>, 2023.
+"Report-Msgid-Bugs-To: katulos@protonmail.com\n"
+"Last-Translator: Katulos <katulos@protonmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: app/plugins/public/id_command.py:17
+#, python-format
+msgid "Your ID: <pre>%(id)s</pre>"
+msgstr "Ваш ID: <pre>%(id)s</pre>"
+
+#: app/plugins/public/on_covid_handler.py:26
+#: app/plugins/public/on_covid_handler.py:29
+msgid "Great news! You have COVID!"
+msgstr "Отличные новости! У вас COVID!"
+
+#: app/plugins/public/on_voice_handler.py:56
+msgid "Voice whore is not a human"
+msgstr "Войсоблядь не человек"
+
+#: app/plugins/public/start_command.py:17
+msgid "Start your anus, dog"
+msgstr "Анус себе стартани, пёс"
+
+#: app/plugins/public/stat_command.py:46
+msgid "No statistics available"
+msgstr "Статистика недоступна"
+
+#: app/plugins/public/stat_command.py:49
+#, python-format
+msgid "`----- [ Statistic` **%(mention)s**` ] -----`\n"
+msgstr "`----- [ Сатистика` **%(mention)s**` ] -----`\n"
+
+#: app/plugins/public/stat_command.py:51
+#, python-format
+msgstr "🎞 **%(animations)d** `animation`\n"
+msgid_plural "🎞 **%(animations)d** `animations`\n"
+msgstr[0] "🎞 **%(animations)d** `анимация`\n"
+msgstr[1] "🎞 **%(animations)d** `анимации`\n"
+msgstr[2] "🎞 **%(animations)d** `анимаций`\n"
+
+#: app/plugins/public/stat_command.py:53
+#, python-format
+msgid "🎧 **%(audios)d** `audio`\n"
+msgid_plural "🎧 **%(audios)d** `audios`\n"
+msgstr[0] "🎧 **%(audios)d** `аудио`\n"
+msgstr[1] "🎧 **%(audios)d** `аудио`\n"
+msgstr[2] "🎧 **%(audios)d** `аудио`\n"
+msgstr "Анус себе стартани, пёс"
+#: app/plugins/public/stat_command.py:55
+#, python-format
+msgid "⏩ **%(forwards)d** `forward`\n"
+msgid_plural "⏩ **%(forwards)d** `forwards`\n"
+msgstr[0] "⏩ **%(forwards)d** `форвард`\n"
+msgstr[1] "⏩ **%(forwards)d** `форварда`\n"
+msgstr[2] "⏩ **%(forwards)d** `форвардов`\n"
+
+#: app/plugins/public/stat_command.py:57
+#, python-format
+msgid "🖼 **%(photos)d** `photo`\n"
+msgid_plural "🖼 **%(photos)d** `photos`\n"
+msgstr[0] "🖼 **%(photos)d** `фото`\n"
+msgstr[1] "🖼 **%(photos)d** `фото`\n"
+msgstr[2] "🖼 **%(photos)d** `фото`\n"
+
+#: app/plugins/public/stat_command.py:59
+#, python-format
+msgid "🏷 **%(stickers)d** `sticker`\n"
+msgid_plural "🏷 **%(stickers)d** `stickers`\n"
+msgstr[0] "🏷 **%(stickers)d** `стикер`\n"
+msgstr[1] "🏷 **%(stickers)d** `стикера`\n"
+msgstr[2] "🏷 **%(stickers)d** `стикеров`\n"
+
+#: app/plugins/public/stat_command.py:61
+#, python-format
+msgid "📽 **%(videos)d** `video`\n"
+msgid_plural "📽 **%(videos)d** `videos`\n"
+msgstr[0] "📽 **%(videos)d** `видео`\n"
+msgstr[1] "📽 **%(videos)d** `видео`\n"
+msgstr[2] "📽 **%(videos)d** `видео`\n"
+
+#: app/plugins/public/stat_command.py:63
+#, python-format
+msgid "🎙 **%(voices)d** `voice`\n"
+msgid_plural "🎙 **%(voices)d** `voices`\n"
+msgstr[0] "🎙 **%(voices)d** `войс`\n"
+msgstr[1] "🎙 **%(voices)d** `войса`\n"
+msgstr[2] "🎙 **%(voices)d** `войсов`\n"
+
+#: app/plugins/public/stat_command.py:65
+#, python-format
+msgid "📣 **%(messages)d** `message`\n"
+msgid_plural "📣 **%(messages)d** `messages`\n"
+msgstr[0] "📣 **%(messages)d** `сообщение`\n"
+msgstr[1] "📣 **%(messages)d** `сообщения`\n"
+msgstr[2] "📣 **%(messages)d** `сообщений`\n"
+
+#: app/plugins/public/stat_command.py:67
+#, python-format
+msgid "💬 **%(words)d** `word`\n"
+msgid_plural "💬 **%(words)d** `words`\n"
+msgstr[0] "💬 **%(words)d** `слово`\n"
+msgstr[1] "💬 **%(words)d** `слов`\n"
+msgstr[2] "💬 **%(words)d** `слов`\n"
+
+#: app/plugins/public/stat_command.py:69
+#, python-format
+msgid "🆎 **%(letters)d** `letter`\n"
+msgid_plural "🆎 **%(letters)d** `letters`\n"
+msgstr[0] "🆎 **%(letters)d** `буква`\n"
+msgstr[1] "🆎 **%(letters)d** `буквы`\n"
+msgstr[2] "🆎 **%(letters)d** `букв`\n"

@@ -4,26 +4,26 @@ import gettext
 import logging
 import os.path
 from pathlib import Path
-from cashews import Cache
 
 import dotenv
-from .config import shared
+from cashews import Cache
 
+from .config import shared
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-locale_dir = os.path.join(Path(__file__).resolve().parent.parent, "locale")
+locale_dir = os.path.join(Path(__file__).resolve().parent.parent, "locales")
 
 t = gettext.translation(
-    "messages",
+    domain="messages",
     localedir=locale_dir,
     languages=[shared.settings.LOCALE],
     fallback=True,
 )
-t.install()
 
 _ = t.gettext
+_n = t.ngettext
 
 
 # Load env variables from file
@@ -44,3 +44,6 @@ TORTOISE_ORM = {
     },
     "use_tz": True,
 }
+
+
+__version__ = "0.0.4"

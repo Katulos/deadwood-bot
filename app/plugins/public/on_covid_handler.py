@@ -8,6 +8,7 @@ from app import _, logger
 pattern = r"(?i).*\b(.*covid.*|.*коронав.*|.*пандеми.*|.*ковид.*)\b"
 
 
+# pylint: disable=no-member
 @Client.on_message(filters.regex(pattern) & (filters.group | filters.private))
 async def on_covid_handler(client: Client, message: Message):
     await client.send_chat_action(
