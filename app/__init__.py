@@ -23,7 +23,7 @@ t = gettext.translation(
 )
 
 _ = t.gettext
-_n = t.ngettext
+ngettext = t.ngettext
 
 
 # Load env variables from file
@@ -46,4 +46,4 @@ TORTOISE_ORM = {
 }
 
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"

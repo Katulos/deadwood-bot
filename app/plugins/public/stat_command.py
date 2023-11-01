@@ -5,7 +5,7 @@ from pyrogram import Client, enums, errors, filters
 from pyrogram.types import Message
 from tortoise.functions import Sum
 
-from app import _, _n, logger
+from app import _, logger, ngettext
 from app.bot import command
 from app.models import ChatStatistic
 
@@ -48,61 +48,61 @@ async def stat_command_handler(client: Client, message: Message) -> None:
             msg = await message.reply(
                 _("`----- [ Statistic` **%(mention)s**` ] -----`\n")
                 % {"mention": mention}
-                + _n(
+                + ngettext(
                     "\U0001f39e **%(animations)d** `animation`\n",
                     "\U0001f39e **%(animations)d** `animations`\n",
                     stat[0].animations,
                 )
                 % {"animations": stat[0].animations}
-                + _n(
+                + ngettext(
                     "\U0001f3a7 **%(audios)d** `audio`\n",
                     "\U0001f3a7 **%(audios)d** `audios`\n",
                     stat[0].audios,
                 )
                 % {"audios": stat[0].audios}
-                + _n(
+                + ngettext(
                     "\U000023E9 **%(forwards)d** `forward`\n",
                     "\U000023E9 **%(forwards)d** `forwards`\n",
                     stat[0].forwards,
                 )
                 % {"forwards": stat[0].forwards}
-                + _n(
+                + ngettext(
                     "\U0001f5bc **%(photos)d** `photo`\n",
                     "\U0001f5bc **%(photos)d** `photos`\n",
                     stat[0].photos,
                 )
                 % {"photos": stat[0].photos}
-                + _n(
+                + ngettext(
                     "\U0001f3f7 **%(stickers)d** `sticker`\n",
                     "\U0001f3f7 **%(stickers)d** `stickers`\n",
                     stat[0].stickers,
                 )
                 % {"stickers": stat[0].stickers}
-                + _n(
+                + ngettext(
                     "\U0001f4fd **%(videos)d** `video`\n",
                     "\U0001f4fd **%(videos)d** `videos`\n",
                     stat[0].videos,
                 )
                 % {"videos": stat[0].videos}
-                + _n(
+                + ngettext(
                     "\U0001f399 **%(voices)d** `voice`\n",
                     "\U0001f399 **%(voices)d** `voices`\n",
                     stat[0].voices,
                 )
                 % {"voices": stat[0].voices}
-                + _n(
+                + ngettext(
                     "\U0001f4e3 **%(messages)d** `message`\n",
                     "\U0001f4e3 **%(messages)d** `messages`\n",
                     stat[0].messages,
                 )
                 % {"messages": stat[0].messages}
-                + _n(
+                + ngettext(
                     "\U0001f4ac **%(words)d** `word`\n",
                     "\U0001f4ac **%(words)d** `words`\n",
                     stat[0].words,
                 )
                 % {"words": stat[0].words}
-                + _n(
+                + ngettext(
                     "\U0001f18e **%(letters)d** `letter`\n",
                     "\U0001f18e **%(letters)d** `letters`\n",
                     stat[0].letters,
