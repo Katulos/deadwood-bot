@@ -9,6 +9,7 @@ from app.plugins.public.on_flood_handler import BANNED_USERS
 from app.utils.utils import reload_admins, update_chat_member, update_statistic
 
 
+# pylint: disable=no-member
 @Client.on_message(
     filters.group
     & ~BANNED_USERS

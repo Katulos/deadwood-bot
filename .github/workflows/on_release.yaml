@@ -30,6 +30,7 @@ jobs:
             BOT_TOKEN=${{ secrets.BOT_TOKEN }}
             PHONE=${{ secrets.PHONE }}
             DATABASE_URL=${{ secrets.DATABASE_URL }}
+            LOCALE=ru
             REDIS_URL=${{ secrets.REDIS_URL }}
             REDDIT_ID=${{ secrets.REDDIT_ID }}
             REDDIT_SECRET=${{ secrets.REDDIT_SECRET }}
@@ -57,7 +58,9 @@ jobs:
             chmod 0777 ${{ secrets.REMOTE_TARGET }}/data
             python3 -m venv ${{ secrets.REMOTE_TARGET }}/venv
             cd ${{ secrets.REMOTE_TARGET }} && . ./venv/bin/activate && \
-            pip install -r requirements.txt && aerich upgrade
+            pip install -r requirements.txt && aerich upgrade && \
+            pip install babel && \
+            pybabel compile -d ${{ secrets.REMOTE_TARGET }}/locales
             sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
             sudo systemctl daemon-reload
             sudo systemctl enable deadwood-bot.service

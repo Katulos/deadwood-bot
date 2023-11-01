@@ -36,7 +36,7 @@ class Settings(BaseSettings):
         env="PHONE",
         default="",
     )
-    LOCALE: str = Field(env="LOCALE", default="en_US")
+    LOCALE: str = Field(env="LOCALE", default="en")
     SESSION_URL: str = Field(
         default=os.path.join(BASE_DIR, "data/session"),
         env="SESSION_URL",
