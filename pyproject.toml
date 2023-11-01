@@ -70,7 +70,7 @@ exclude = '''
 '''
 
 [tool.bumpversion]
-current_version = "0.0.3"
+current_version = "0.0.4"
 commit = true
 tag = false
 message = "Bump version: {current_version} -> {new_version}"
