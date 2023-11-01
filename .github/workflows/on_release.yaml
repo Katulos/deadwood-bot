@@ -53,6 +53,8 @@ jobs:
           SCRIPT_BEFORE: |
             sudo systemctl stop deadwood-bot.service
             sudo systemctl disable deadwood-bot.service
+            sudo systemctl daemon-reload
+            sudo chown -R ${{ secrets.REMOTE_USER }} ${{ secrets.REMOTE_TARGET }}
             tar --exclude='${{ secrets.REMOTE_TARGET }}/venv' -zcvf ~/deadwood-bot_backup_${{ steps.date.outputs.date }}.tgz ${{ secrets.REMOTE_TARGET }}
           SCRIPT_AFTER: |
             chmod 0777 ${{ secrets.REMOTE_TARGET }}/data
@@ -60,8 +62,9 @@ jobs:
             cd ${{ secrets.REMOTE_TARGET }} && . ./venv/bin/activate && \
             pip install -r requirements.txt && aerich upgrade && \
             pip install babel && \
-            pybabel compile -d ${{ secrets.REMOTE_TARGET }}/locales
+            pybabel compile -f -d ${{ secrets.REMOTE_TARGET }}/locales
             sudo ln -s ${{ secrets.REMOTE_TARGET }}/deadwood-bot.service /etc/systemd/system/deadwood-bot.service
+            sudo chown -R nobody:nogroup ${{ secrets.REMOTE_TARGET }}
             sudo systemctl daemon-reload
             sudo systemctl enable deadwood-bot.service
             sudo systemctl start deadwood-bot.service
