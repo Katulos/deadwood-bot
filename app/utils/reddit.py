@@ -39,7 +39,6 @@ class RedditWrapper:
                     sort="top",
                     limit=500,
                     params={"include_over_18": "on"},
-                    time_filter="day",
                 )
                 data = [[u.title, u.url] async for u in search]
                 if not data:
@@ -53,7 +52,7 @@ class RedditWrapper:
                 subreddit = await self.reddit.subreddit(sub)
                 data = [
                     [u.title, u.url]
-                    async for u in subreddit.top(limit=500, time_filter="day")
+                    async for u in subreddit.top(limit=500)
                 ]
                 if not data:
                     await self._close_connection()
