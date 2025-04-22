@@ -15,6 +15,7 @@ from telethon.tl.types import Message, User
 
 from app import client
 from app.utils import logging
+from app.utils.i18n import _
 from app.utils.privileges import is_admin, is_enabled_command
 from app.utils.tools import get_mention
 
@@ -47,15 +48,15 @@ def _handle_command_errors(
             return await func(event, *args, **kwargs)
         except ChatAdminRequiredError as e:
             _logger.error(f"Error in command handler: {e}")
-            await event.reply("You are not right enough")
+            await event.reply(_("not-enough"))
             return None
         except TypeError as e:
             _logger.error(f"Error in command handler: {e}")
-            await event.reply("Something went wrong")
+            await event.reply(_("something-wrong"))
             return None
         except Exception as e:
             _logger.error(f"Error in command handler: {e}")
-            await event.reply("Something went wrong")
+            await event.reply(_("something-wrong"))
             return None
 
     return wrapper
@@ -81,14 +82,14 @@ def command_decorator_factory(
             @wraps(func)
             async def handler(event: Message) -> Any:
                 if not event.sender:
-                    await event.reply("To yourself?")
+                    await event.reply(_("to-yourself"))
                     return
 
                 if admin_only and not await is_admin(
                     event.chat.id,
                     event.sender.id,
                 ):
-                    await event.reply("You are not right enough")
+                    await event.reply(_("not-enough"))
                     return
 
                 if not admin_only:
@@ -107,7 +108,7 @@ def command_decorator_factory(
 
                 if moderate:
                     if not event.is_reply:
-                        await event.reply("It doesn't work like that")
+                        await event.reply(_("doesnt-work-like-that"))
                         return
 
                     reply_to = await event.get_reply_message()
@@ -115,11 +116,11 @@ def command_decorator_factory(
                         return
 
                     if reply_to.sender.bot:
-                        await event.reply("It doesn't work on bots")
+                        await event.reply(_("doesnt-work-like-that"))
                         return
 
                     if await is_admin(event.chat.id, reply_to.sender.id):
-                        await event.reply("You are not right enough")
+                        await event.reply(_("not-enough"))
                         return
 
                     result = await func(

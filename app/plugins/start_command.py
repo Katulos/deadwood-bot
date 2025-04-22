@@ -3,8 +3,9 @@ import asyncio
 from telethon import TelegramClient
 from telethon.tl.custom import Message
 
-from ..utils import user_command
-from ..utils.tools import get_mention
+from app.utils.decorators import user_command
+from app.utils.i18n import _
+from app.utils.tools import get_mention
 
 
 async def init(client: TelegramClient) -> None:
@@ -14,4 +15,4 @@ async def init(client: TelegramClient) -> None:
         async with event.client.action(chat, "typing"):
             await asyncio.sleep(2)
             sender = await event.get_sender()
-            await event.reply(f"Hello {get_mention(sender)}!")
+            await event.reply(_("hello", {"user": get_mention(sender)}))

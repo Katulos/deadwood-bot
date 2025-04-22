@@ -6,7 +6,7 @@ import tenacity
 from telethon import TelegramClient
 from telethon.errors import TokenInvalidError
 
-from app.config import settings
+from app.config.setting import settings
 from app.utils import connect_to_services, logging
 
 _logger = logging.setup_logger(settings.app.logging_level).bind(
@@ -57,7 +57,6 @@ async def _on_shutdown() -> None:
     await _handle_database_connection(connect=False)
 
 
-# Initialize Telegram client
 client = TelegramClient(
     session=settings.bot.session_url,
     api_id=settings.bot.api_id,
@@ -94,7 +93,6 @@ async def main() -> None:
         _exit_with_error("Invalid authentication token")
     finally:
         await _on_shutdown()
-        # await client.disconnect()
 
 
 def run() -> None:

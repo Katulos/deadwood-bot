@@ -1,6 +1,10 @@
 annotated-types==0.7.0
+attrs==25.3.0
+babel==2.17.0
 colorama==0.4.6
 coverage[toml]==7.8.0
+fluent-runtime==0.4.0
+fluent-syntax==0.19.0
 iniconfig==2.1.0
 orjson==3.10.15
 packaging==24.2

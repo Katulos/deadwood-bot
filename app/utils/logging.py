@@ -4,7 +4,7 @@ from typing import Any
 
 import structlog
 
-from .tools import orjson_dumps
+from app.utils.tools import orjson_dumps
 
 
 class _StructlogFormatter(logging.Formatter):

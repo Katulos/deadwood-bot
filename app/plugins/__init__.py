@@ -6,9 +6,13 @@ import time
 from collections.abc import Coroutine, Generator
 from typing import Any, Optional
 
-from app import utils
+import structlog
 
-logging = utils.logging.setup_logger().bind(type="business")
+from app.utils import logging
+
+logger: structlog.typing.FilteringBoundLogger = logging.setup_logger().bind(
+    type="business",
+)
 
 
 async def init(client: Any) -> None:
@@ -43,7 +47,7 @@ def get_init_coro(
             result_kwargs[param] = kwargs[param]
         else:
             param_name = str(param)
-            logging.error(
+            logger.error(
                 "Plugin %s has unknown init parameter %s",
                 plugin.__name__,
                 param_name,
@@ -55,15 +59,15 @@ def get_init_coro(
 
 async def _init_plugin(plugin: Any, kwargs: dict[str, Any]) -> None:
     try:
-        logging.info(f"Loading plugin {plugin.__name__}…")
+        logger.info(f"Loading plugin {plugin.__name__}…")
         start = time.time()
         ret = await plugin.init(**kwargs)
         took = time.time() - start
-        logging.info(f"Loaded plugin {plugin.__name__} (took {took:.2f}s)")
+        logger.info(f"Loaded plugin {plugin.__name__} (took {took:.2f}s)")
         if asyncio.iscoroutine(ret):
             await ret
     except Exception:
-        logging.exception(f"Failed to load plugin {plugin.__name__}")
+        logger.exception(f"Failed to load plugin {plugin.__name__}")
 
 
 async def start_plugins(client: Any, plugins: list[Any]) -> None:

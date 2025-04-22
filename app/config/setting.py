@@ -51,6 +51,10 @@ class AbstractSettings(BaseSettings):
 class AppConfig(BaseModel):
     debug: bool = Field(default=False)
 
+    supported_locales: list[str] = ["en", "ru"]
+
+    default_locale: str = Field(default="en")
+
     @property
     def logging_level(self) -> int:
         return logging.DEBUG if self.debug else logging.INFO
