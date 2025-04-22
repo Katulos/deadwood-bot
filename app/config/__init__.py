@@ -1,2 +1,3 @@
-from .settings import Settings
-from .shared import shared
+from .setting import settings
+
+__all__ = ["settings"]

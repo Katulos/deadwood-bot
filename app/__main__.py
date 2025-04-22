@@ -1,5 +1,9 @@
-from app.bot import Bot
+from app.client import run
+from app.utils import logging
 
 if __name__ == "__main__":
-    bot = Bot()
-    bot.run()
+    _logger = logging.setup_logger().bind(type="business")
+    try:
+        run()
+    except (KeyboardInterrupt, SystemExit):
+        _logger.info("Client stopped")

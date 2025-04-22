@@ -73,6 +73,7 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
+.pybuild/
 target/
 
 # Jupyter Notebook
@@ -159,18 +160,23 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea
 
+# debuild
+.debhelper
+.build
+*.deb
+*.dsc
+*.build
+*.buildinfo
+*.changes
+*.tar.gz
+*.tar.xz
+*.substvars
+
+# Ruff linter
+.ruff_cache/
+
 # Current project
-*.sqlite3
-*.sqlite3-shm
-*.sqlite3-wal
-*.sqlite3-journal
-*.session
-*.session-shm
-*.session-wal
-*.session-journal
-
-data/
+data/*
 !data/.gitkeep
-!data/cache/.gitkeep
-
-app/plugins/private
+/config.yaml
+/old_code

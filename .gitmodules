@@ -1,3 +1,0 @@
-[submodule "app/plugins/private"]
-	path = app/plugins/private
-	url = git@github.com:Katulos/deadwood-bot-ext.git
