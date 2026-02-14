@@ -62,6 +62,11 @@ repos:
           - --fix=lf
         description: Forces to replace line ending by the UNIX 'lf' character.
 
+  - repo: https://github.com/hollow/pre-commit-actionlint
+    rev: "v1.6.24"
+    hooks:
+      - id: actionlint
+
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.5
     hooks:
@@ -70,21 +75,8 @@ repos:
       - id: forbid-tabs
       - id: remove-tabs
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
-    hooks:
-      - id: mypy
-        exclude: |
-          (?x)(
-              /__init__\.py$|
-              ^versions/|
-              ^tests/
-          )
-        additional_dependencies:
-          - "types-click"
-          - "types-pyyaml"
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.1.0
+    rev: v3.0.1
     hooks:
       - id: add-trailing-comma
 

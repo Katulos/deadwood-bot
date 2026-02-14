@@ -1,0 +1,64 @@
+[project]
+name = "deadwood"
+description = ""
+keywords = []
+dynamic = [ "version" ]
+authors = [
+    { name = "Katulos", email = "katulos@protonmail.com" }
+]
+maintainers = [
+    { name = "Katulos", email = "123748719+Katulos@users.noreply.github.com"}
+]
+readme = "README.md"
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet",
+    "Topic :: Software Development :: User Interfaces"
+]
+requires-python = ">= 3.9"
+dependencies = [
+    "aerich[toml]>=0.9.2",
+    "aiohttp>=3.13.3",
+    "asyncpraw>=7.8.1",
+    "asyncprawcore>=2.4.0",
+    "cashews>=7.4.4",
+    "click>=8.1.8",
+    "diskcache>=5.6.3",
+    "dynaconf>=3.2.12",
+    "orjson>=3.11.5",
+    "rich>=14.3.2",
+    "structlog>=25.5.0",
+    "telethon>=1.42.0",
+    "tortoise-orm>=0.25.4",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "app.__version__"}
+
+[project.scripts]
+deadwood = "app.cli.commands:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+app= ['locales/*', 'data/*']
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.aerich]
+tortoise_orm = "app.adapters.db.TORTOISE_ORM"
+location = "./src/app/adapters/db/migrations"
+src_folder = "./."

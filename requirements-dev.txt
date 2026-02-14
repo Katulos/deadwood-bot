@@ -1,0 +1,4 @@
+nox
+pre-commit
+python-semantic-release
+ruff

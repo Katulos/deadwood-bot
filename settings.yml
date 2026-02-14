@@ -1,0 +1,2 @@
+debug: false
+database_url: "sqlite://data/db.sqlite3"

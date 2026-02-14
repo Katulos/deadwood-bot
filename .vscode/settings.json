@@ -1,0 +1,10 @@
+{
+  "python.testing.pytestEnabled": true,
+  "pythonTestExplorer.testFramework": "pytest",
+  "testExplorer.useNativeTesting": true,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "remote.autoForwardPortsFallback": 0
+}

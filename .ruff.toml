@@ -1,15 +1,17 @@
+include = ['pyproject.toml', 'src/**/*.py', 'tests/**/*.py']
 exclude = [
-    "*.egg-info",
+    '*.egg-info',
     '*.pyi',
-    "build",
-    "dist",
+    'build',
+    'dist',
     '.tox',
     '.git',
     'venv',
     '.venv',
     '.mypy_cache',
     '.pytest_cache',
-    '.ruff_cache'
+    '.ruff_cache',
+    'src/**/adapters/db/migrations/**/*.py'
 ]
 line-length = 78
 indent-width = 4
@@ -52,7 +54,7 @@ ignore  = [
     # 'F401',
     'F403',
 ]
-fixable = ['A', 'B', 'C4', 'E', 'F', 'I', 'TID']
+fixable = ['A', 'B', 'C4', 'E', 'F', 'I', 'TID', 'UP', 'D400', 'D415']
 unfixable = []
 flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double', docstring-quotes = 'double'}
 dummy-variable-rgx = '^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$'
@@ -65,10 +67,10 @@ docstring-code-format = false
 docstring-code-line-length = 'dynamic'
 
 [lint.isort]
-# required-imports = ["from __future__ import annotations"]
+# required-imports = ['from __future__ import annotations']
 
 [lint.mccabe]
 max-complexity = 10
 
 [lint.per-file-ignores]
-"__init__.py" = ["F401"]
+'__init__.py' = ['F401']
