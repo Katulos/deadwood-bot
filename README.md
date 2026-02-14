@@ -1,1 +1,0 @@
-### Bot for private Telegram chat Deadwood
