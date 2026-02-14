@@ -1,6 +1,6 @@
 [semantic_release]
 version_variables = [
-    "app/__init__.py:__version__"
+    "src/app/__init__.py:__version__"
 ]
 assets = []
 build_command_env = []

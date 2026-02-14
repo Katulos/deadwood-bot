@@ -178,5 +178,5 @@ cython_debug/
 # Current project
 data/*
 !data/.gitkeep
-/config.yaml
+/.secrets.*
 /old_code
