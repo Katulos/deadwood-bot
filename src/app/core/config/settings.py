@@ -1,10 +1,9 @@
 import logging
 import os
-from pathlib import Path
 
 from dynaconf import Dynaconf, ValidationError, Validator
 
-_BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
+_BASE_DIR = os.getcwd()
 
 
 settings = Dynaconf(
