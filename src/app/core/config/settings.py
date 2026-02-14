@@ -93,6 +93,12 @@ settings.validators.register(
         apply_default_on_none=True,
         default="Trenddit/0.0.2",
     ),
+    # Cache
+    Validator(
+        "cache_url",
+        apply_default_on_none=True,
+        default=f"disk://?directory={os.path.join(_BASE_DIR, 'data/cache')}",
+    ),
 )
 
 try:

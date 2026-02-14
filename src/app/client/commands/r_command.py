@@ -12,7 +12,7 @@ from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageTypingAction
 
 from app.client.bot import client
-from app.client.decorators import par_command
+from app.client.decorators import cache, par_command
 from app.core.services import reddit
 
 r_command = "r"
@@ -61,8 +61,8 @@ async def r_command_handler(event: Message):
             logging.warning("Grant permission can_delete_messages!")
 
 
-# @cache.failover(ttl="1h")
-# @cache(ttl="24h")
+@cache.failover(ttl="1h")
+@cache(ttl="24h")
 async def _fetch(request) -> Any:
     _reddit = reddit.RedditWrapper()
     media = await _reddit.fetch(request)
