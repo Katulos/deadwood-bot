@@ -23,6 +23,7 @@ client = TelegramClient(
     system_lang_code=settings.get("system_lang_code"),
 )
 
+from app.client.commands import *  # noqa: E402
 from app.client.handlers import *  # noqa: E402
 
 

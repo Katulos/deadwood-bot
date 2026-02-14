@@ -85,6 +85,14 @@ settings.validators.register(
     ),
     # debug
     Validator("debug", default=False, is_type_of=bool),
+    # Reddit
+    Validator("reddit_client_id", apply_default_on_none=False),
+    Validator("reddit_client_secret", apply_default_on_none=False),
+    Validator(
+        "reddit_user_agent",
+        apply_default_on_none=True,
+        default="Trenddit/0.0.2",
+    ),
 )
 
 try:

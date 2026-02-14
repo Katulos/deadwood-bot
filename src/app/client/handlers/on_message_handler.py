@@ -13,7 +13,8 @@ async def on_message_handler(event: events.NewMessage.Event):
     if chat:
         updated_at = chat.updated_at
         if timezone.now() - updated_at > timedelta(hours=1):
-            await chat.update(updated_at=timezone.now())
+            chat.updated_at = timezone.now()
+            await chat.save()
     else:
         await Chat.update_or_create(
             chat_id=event.chat.id,
