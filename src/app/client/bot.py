@@ -47,6 +47,10 @@ async def _start() -> None:
             )
             await _set_bot_commands()
             logging.info("Auth as bot")
+
+        if settings.get("admins") == []:
+            logging.warning("Admins are not set!")
+
         await client.run_until_disconnected()
 
     except TokenInvalidError:
