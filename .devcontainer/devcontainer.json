@@ -48,11 +48,11 @@
     }
   },
   "postCreateCommand": {
-    "setupEnvironment": "uv python install 3.19 && uv --clear venv --python 3.9  && sudo chown -R $(whoami): ${containerWorkspaceFolder}/.venv"
+    "setupEnvironment": "uv python install 3.9 && uv venv --python 3.9 && sudo chown -R $(whoami): ${containerWorkspaceFolder}/.venv"
   },
   "remoteEnv": {
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
-    "WORKSPACE": "/workspace",
+    "WORKSPACE": "${containerWorkspaceFolder}",
     "UV_VENV_CLEAR": "1",
     "UV_LINK_MODE": "copy"
   },
