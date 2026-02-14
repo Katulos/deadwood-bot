@@ -5,7 +5,7 @@ help: ## Display this help screen
 	@grep -E '^[a-z.A-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: clean
-clean: clean-build clean-test clean-pyc ## Clean project
+clean: clean-build clean-test clean-pyc clean-cache ## Clean project
 
 .PHONY: clean-build
 clean-build:
@@ -31,6 +31,10 @@ clean-test:
 	rm -f .coverage
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
+
+.PHONY: clean-cache
+clean-cache:
+	rm -fr data/cache/
 
 .PHONY: test
 test: clean nox ## Run tests

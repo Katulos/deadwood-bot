@@ -8,6 +8,25 @@ from app.client.bot import client
 from app.core.config import settings
 
 
+def command(command: str):
+    def decorator(func):
+        pattern = f"(?i)^[/!]{command}$"
+
+        @client.on(
+            events.NewMessage(
+                pattern=pattern,
+                func=lambda event: event.is_group,
+            ),
+        )
+        async def handle(event: Message):
+            try:
+                await func(event)
+            except ChatAdminRequiredError as e:
+                logging.error(e.message)
+
+    return decorator
+
+
 def par_command(command: str):
     def decorator(func):
         pattern = f"(?i)^[/!]{command} (.*?)$"
