@@ -48,9 +48,6 @@ deadwood = "app.cli.commands:cli"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.setuptools.package-data]
-app= ['locales/*', 'data/*']
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
