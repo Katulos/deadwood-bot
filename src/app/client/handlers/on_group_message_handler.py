@@ -8,7 +8,7 @@ from app.client.bot import client
 
 
 @client.on(events.NewMessage(func=lambda event: event.is_group))
-async def on_message_handler(event: events.NewMessage.Event):
+async def on_group_message_handler(event: events.NewMessage.Event):
     chat = await Chat.get_or_none(chat_id=event.chat.id)
     if chat:
         updated_at = chat.updated_at
