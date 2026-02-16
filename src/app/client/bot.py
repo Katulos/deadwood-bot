@@ -1,4 +1,5 @@
 import logging
+import sys
 
 from telethon import TelegramClient, functions, types
 from telethon.errors import (
@@ -23,8 +24,13 @@ client = TelegramClient(
     system_lang_code=settings.get("system_lang_code"),
 )
 
-from app.client.commands import *  # noqa: E402
-from app.client.handlers import *  # noqa: E402
+try:
+    from . import commands, handlers
+except ImportError:
+    logging.error(
+        "Could not load the plugins module, does the directory exist in the correct location?",
+    )
+    sys.exit(1)
 
 
 async def _start() -> None:
@@ -51,6 +57,9 @@ async def _start() -> None:
 
         if settings.get("admins") == []:
             logging.warning("Admins are not set!")
+
+        await handlers.init(client)
+        await commands.init(client)
 
         await client.run_until_disconnected()
 
