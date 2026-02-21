@@ -177,8 +177,7 @@ cython_debug/
 .secrets.*
 
 # Local project
-data/
+data/*
 !data/.gitkeep
-/config.yml
-!.devcontainer/.env
+.devcontainer/.env
 old_code
