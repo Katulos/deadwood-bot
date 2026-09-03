@@ -23,7 +23,7 @@ class ChatFlag(Model):
     updated_at = fields.DatetimeField(auto_now=True)
 
     chat = fields.OneToOneField(
-        model_name="deadwood.Chat",
+        to="deadwood.Chat",
         related_name="flags",
         on_delete=fields.CASCADE,
     )

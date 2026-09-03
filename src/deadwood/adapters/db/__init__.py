@@ -7,7 +7,7 @@ from deadwood.core.config import settings
 TORTOISE_ORM = {
     "connections": {"default": settings.get("database_url")},
     "apps": {
-        "app": {
+        "deadwood": {
             "models": ["deadwood.adapters.db.models", "aerich.models"],
             "default_connection": "default",
         },
