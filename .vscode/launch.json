@@ -7,7 +7,7 @@
       "request": "launch",
       "python": "${command:python.interpreterPath}",
       "console": "integratedTerminal",
-      "module": "app",
+      "module": "deadwood",
       "args": ["start"],
       "cwd": "${workspaceRoot}"
     },
@@ -20,7 +20,7 @@
       "python": "${command:python.interpreterPath}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
-      "module": "app",
+      "module": "deadwood",
       "args": ["start"],
       "cwd": "${workspaceRoot}"
     },
