@@ -31,6 +31,7 @@ dependencies = [
     "asyncpraw>=7.8.1",
     "cashews[diskcache]>=7.4.4",
     "click>=8.3.1",
+    "dishka>=1.10.1",
     "dynaconf>=3.2.12",
     "orjson>=3.11.7",
     "python-socks[asyncio]>=3.0.0",
