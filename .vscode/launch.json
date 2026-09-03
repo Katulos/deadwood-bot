@@ -22,7 +22,7 @@
       "internalConsoleOptions": "openOnSessionStart",
       "module": "app",
       "args": ["start"],
-      "cwd": "${workspaceRoot}",
+      "cwd": "${workspaceRoot}"
     },
     {
       "name": "Python: Run Current File",
