@@ -11,7 +11,7 @@ from telethon.errors import (
 from tortoise import Tortoise, run_async
 
 from deadwood.adapters.db import TORTOISE_ORM
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 client = TelegramClient(
     session=settings.get("session"),

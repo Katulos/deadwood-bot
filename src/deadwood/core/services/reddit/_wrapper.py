@@ -2,7 +2,7 @@ import aiohttp
 import asyncpraw
 import asyncprawcore
 
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 
 class RedditWrapper:

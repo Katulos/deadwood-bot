@@ -1,6 +1,6 @@
 from cashews import Cache
 
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 cache = Cache()
 cache.setup(

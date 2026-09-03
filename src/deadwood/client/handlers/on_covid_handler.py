@@ -2,7 +2,7 @@ from telethon import TelegramClient, events, functions
 from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageUploadPhotoAction
 
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 _pattern = r"(?i).*\b(.*covid.*|.*коронав.*|.*пандеми.*|.*ковид.*)\b"
 

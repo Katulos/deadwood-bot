@@ -5,7 +5,7 @@ from telethon.errors import ChatAdminRequiredError
 from telethon.tl.custom import Message
 
 from deadwood.client.bot import client
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 
 def command(command: str):
