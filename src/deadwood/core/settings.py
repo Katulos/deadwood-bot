@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 from dynaconf import Dynaconf, ValidationError, Validator
 
@@ -8,10 +9,16 @@ _BASE_DIR = os.getcwd()
 
 settings = Dynaconf(
     settings_files=[
+        "?/etc/deadwood/settings.toml",
+        "?/etc/deadwood/.secrets.toml",
         "?/etc/deadwood/settings.yml",
         "?/etc/deadwood/.secrets.yml",
+        "?~/.config/deadwood/settings.toml",
+        "?~/.config/deadwood/.secrets.toml",
         "?~/.config/deadwood/settings.yml",
         "?~/.config/deadwood/.secrets.yml",
+        os.path.join(_BASE_DIR, "settings.toml"),
+        os.path.join(_BASE_DIR, ".secrets.toml"),
         os.path.join(_BASE_DIR, "settings.yml"),
         os.path.join(_BASE_DIR, ".secrets.yml"),
     ],
@@ -63,9 +70,50 @@ settings.validators.register(
         required=True,
     ),
     Validator("use_ipv6", default=False, is_type_of=bool),
-    Validator("use_proxy", default=False, is_type_of=bool),
-    Validator("proxy", is_type_of=dict, apply_default_on_none=False),
-    Validator("phone", apply_default_on_none=False),
+    # Proxy
+    Validator("use_proxy", apply_default_on_none=False, is_type_of=bool),
+    Validator(
+        "proxy",
+        is_type_of=dict,
+        when=Validator("use_proxy", must_exist=True),
+    ),
+    Validator(
+        "proxy.proxy_type",
+        is_in=["mtproxy", "socks5"],
+        when=Validator("use_proxy", must_exist=True, eq=True),
+    ),
+    Validator(
+        "proxy.addr",
+        is_type_of=str,
+        when=Validator("use_proxy", must_exist=True, eq=True),
+    ),
+    Validator(
+        "proxy.port",
+        is_type_of=int,
+        must_exist=True,
+        when=Validator("use_proxy", must_exist=True, eq=True),
+    ),
+    Validator(
+        "proxy.secret",
+        must_exist=True,
+        when=Validator("proxy.proxy_type", eq="mtproxy"),
+    ),
+    Validator(
+        "proxy.secret",
+        must_exist=False,
+        when=Validator("proxy.proxy_type", eq="socks5"),
+    ),
+    #
+    Validator(
+        "phone",
+        must_exist=True,
+        when=Validator("bot_token", must_exist=False),
+    ),
+    Validator(
+        "bot_token",
+        must_exist=True,
+        when=Validator("phone", must_exist=False),
+    ),
     Validator(
         "admins",
         apply_default_on_none=True,
@@ -113,3 +161,4 @@ try:
     settings.validators.validate_all()
 except ValidationError as e:
     logging.error(e.message)
+    sys.exit(1)
