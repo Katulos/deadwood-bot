@@ -2,7 +2,7 @@ import logging
 
 import click
 
-from deadwood.client.bot import run
+from deadwood.client import run
 from deadwood.core import logging as logger
 from deadwood.core import settings
 
