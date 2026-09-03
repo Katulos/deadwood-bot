@@ -62,7 +62,9 @@ settings.validators.register(
         default="Windows 10",
         required=True,
     ),
-    Validator("bot_token", apply_default_on_none=False),
+    Validator("use_ipv6", default=False, is_type_of=bool),
+    Validator("use_proxy", default=False, is_type_of=bool),
+    Validator("proxy", is_type_of=dict, apply_default_on_none=False),
     Validator("phone", apply_default_on_none=False),
     Validator(
         "admins",

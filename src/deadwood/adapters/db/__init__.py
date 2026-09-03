@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 
-from deadwood.core.config import settings
+from deadwood.core import settings
 
 TORTOISE_ORM = {
     "connections": {"default": settings.get("database_url")},

@@ -31,6 +31,7 @@ pyaes==1.6.1
 pyasn1==0.6.4
 pygments==2.21.0
 pypika-tortoise==0.6.5
+python-socks==3.0.0
 rich==15.0.0
 rsa==4.9.1
 structlog==26.1.0

@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from telethon import TelegramClient, functions, types
+from telethon import TelegramClient, connection, functions, types
 from telethon.errors import (
     AccessTokenInvalidError,
     AuthKeyUnregisteredError,
@@ -11,18 +11,62 @@ from telethon.errors import (
 from tortoise import Tortoise, run_async
 
 from deadwood.adapters.db import TORTOISE_ORM
-from deadwood.core.config import settings
+from deadwood.core import settings
 
-client = TelegramClient(
-    session=settings.get("session"),
-    api_id=settings.get("api_id"),
-    api_hash=settings.get("api_hash"),
-    device_model=settings.get("device_model"),
-    system_version=settings.get("system_version"),
-    app_version=settings.get("app_version"),
-    lang_code=settings.get("lang_code"),
-    system_lang_code=settings.get("system_lang_code"),
-)
+use_proxy = settings.get("use_proxy")
+if use_proxy:
+    proxy_type = settings.get("proxy").get("proxy_type")
+    match proxy_type:
+        case "mtproxy":
+            logging.debug("Using mtproxy")
+            client = TelegramClient(
+                session=settings.get("session"),
+                api_id=settings.get("api_id"),
+                api_hash=settings.get("api_hash"),
+                device_model=settings.get("device_model"),
+                system_version=settings.get("system_version"),
+                app_version=settings.get("app_version"),
+                lang_code=settings.get("lang_code"),
+                system_lang_code=settings.get("system_lang_code"),
+                #
+                use_ipv6=settings.get("use_ipv6"),
+                connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
+                proxy=(
+                    settings.get("proxy").get("addr"),
+                    settings.get("proxy").get("port"),
+                    settings.get("proxy").get("secret"),
+                ),
+            )
+        case "socks5":
+            logging.debug("Using socks5 proxy")
+            client = TelegramClient(
+                session=settings.get("session"),
+                api_id=settings.get("api_id"),
+                api_hash=settings.get("api_hash"),
+                device_model=settings.get("device_model"),
+                system_version=settings.get("system_version"),
+                app_version=settings.get("app_version"),
+                lang_code=settings.get("lang_code"),
+                system_lang_code=settings.get("system_lang_code"),
+                #
+                use_ipv6=settings.get("use_ipv6"),
+                proxy=settings.get("proxy"),
+            )
+        case _:
+            raise Exception("Unknown proxy type")
+else:
+    client = TelegramClient(
+        session=settings.get("session"),
+        api_id=settings.get("api_id"),
+        api_hash=settings.get("api_hash"),
+        device_model=settings.get("device_model"),
+        system_version=settings.get("system_version"),
+        app_version=settings.get("app_version"),
+        lang_code=settings.get("lang_code"),
+        system_lang_code=settings.get("system_lang_code"),
+        #
+        use_ipv6=settings.get("use_ipv6"),
+    )
 
 try:
     from . import commands, handlers
@@ -69,6 +113,8 @@ async def _start() -> None:
         logging.error("Auth key is unregistered")
     except AccessTokenInvalidError:
         logging.error("Access token is invalid")
+    except ConnectionError:
+        logging.error("Connection error")
 
 
 async def _set_bot_commands() -> None:
