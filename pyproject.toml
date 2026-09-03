@@ -40,10 +40,10 @@ dependencies = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "app.__version__"}
+version = {attr = "deadwood.__version__"}
 
 [project.scripts]
-deadwood = "app.cli.commands:cli"
+deadwood = "deadwood.cli.commands:cli"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -53,6 +53,6 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.aerich]
-tortoise_orm = "app.adapters.db.TORTOISE_ORM"
-location = "./src/app/adapters/db/migrations"
+tortoise_orm = "deadwood.adapters.db.TORTOISE_ORM"
+location = "./src/deadwood/adapters/db/migrations"
 src_folder = "./."

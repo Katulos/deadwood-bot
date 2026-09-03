@@ -2,9 +2,9 @@ import logging
 
 import click
 
-from app.client.bot import run
-from app.core import logging as logger
-from app.core.config import settings
+from deadwood.client.bot import run
+from deadwood.core import logging as logger
+from deadwood.core.config import settings
 
 logger.setup_logger()
 

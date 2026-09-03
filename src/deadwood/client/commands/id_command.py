@@ -9,14 +9,22 @@ from telethon.errors import (
 from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageTypingAction
 
-from app.client.decorators import command
+from deadwood.client.decorators import command
 
-stop_command = "stop"
+id_command = "id"
 
 
 async def init(client: TelegramClient):
-    @command(stop_command)
-    async def stop_command_handler(event: Message):
+    @command(id_command)
+    async def id_command_handler(event: Message):
+        # TODO: implement this
+        # chat = (
+        #     await Chat.filter(chat_id=event.chat.id)
+        #     .prefetch_related("flags")
+        #     .get_or_none()
+        # )
+        # if not chat.flags.enabled:
+        #     return
         try:
             await client(
                 functions.messages.SetTypingRequest(
@@ -25,8 +33,9 @@ async def init(client: TelegramClient):
                 ),
             )
             await asyncio.sleep(random.randint(3, 6))
+
             msg = await event.reply(
-                "Stop your anus, dog",
+                f"Your ID: `{event.from_id.user_id}`",
                 reply_to=(
                     event.message.reply_to_msg_id
                     if event.message.reply_to_msg_id

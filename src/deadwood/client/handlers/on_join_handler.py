@@ -2,7 +2,7 @@ import logging
 
 from telethon import TelegramClient, events
 
-from app.adapters.db.models import Chat
+from deadwood.adapters.db.models import Chat
 
 
 async def init(client: TelegramClient):

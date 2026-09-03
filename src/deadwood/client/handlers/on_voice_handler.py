@@ -10,7 +10,7 @@ from telethon.tl.types import (
     SendMessageUploadVideoAction,
 )
 
-from app.core.config import settings
+from deadwood.core.config import settings
 
 
 async def init(client: TelegramClient):

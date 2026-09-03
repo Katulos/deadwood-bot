@@ -12,7 +12,7 @@ from telethon.tl.types import (
     SendMessageUploadDocumentAction,
 )
 
-from app.client.decorators import command
+from deadwood.client.decorators import command
 
 json_command = "json"
 

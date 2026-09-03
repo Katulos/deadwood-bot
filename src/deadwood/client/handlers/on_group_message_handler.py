@@ -3,7 +3,7 @@ from datetime import timedelta
 from telethon import TelegramClient, events
 from tortoise import timezone
 
-from app.adapters.db.models import Chat
+from deadwood.adapters.db.models import Chat
 
 load_priority = 2
 

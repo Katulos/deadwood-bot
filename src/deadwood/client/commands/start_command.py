@@ -9,7 +9,7 @@ from telethon.errors import (
 from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageTypingAction
 
-from app.client.decorators import command
+from deadwood.client.decorators import command
 
 start_command = "start"
 

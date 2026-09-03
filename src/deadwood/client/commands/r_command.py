@@ -11,8 +11,8 @@ from telethon.errors import (
 from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageTypingAction
 
-from app.client.decorators import cache, par_command
-from app.core.services import reddit
+from deadwood.client.decorators import cache, par_command
+from deadwood.core.services import reddit
 
 r_command = "r"
 

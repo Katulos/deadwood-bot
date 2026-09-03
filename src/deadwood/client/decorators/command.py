@@ -4,8 +4,8 @@ from telethon import events
 from telethon.errors import ChatAdminRequiredError
 from telethon.tl.custom import Message
 
-from app.client.bot import client
-from app.core.config import settings
+from deadwood.client.bot import client
+from deadwood.core.config import settings
 
 
 def command(command: str):
