@@ -22,6 +22,8 @@ client = TelegramClient(
     app_version=settings.get("app_version"),
     lang_code=settings.get("lang_code"),
     system_lang_code=settings.get("system_lang_code"),
+    #
+    use_ipv6=settings.get("use_ipv6"),
 )
 
 try:
