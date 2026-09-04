@@ -5,8 +5,8 @@ from telethon import TelegramClient, events
 from deadwood.adapters.db.models import Chat
 
 
-async def init(client: TelegramClient):
-    @client.on(
+async def init(client: TelegramClient) -> None:
+    @client.on(  # type: ignore[untyped-decorator]
         events.ChatAction(
             func=lambda event: (
                 event.is_group
@@ -16,7 +16,7 @@ async def init(client: TelegramClient):
             ),
         ),
     )
-    async def on_left_handler(event: events.ChatAction.Event):
+    async def on_left_handler(event: events.ChatAction.Event) -> None:
         try:
             chat = await Chat.get_or_none(chat_id=event.chat.id)
             if chat:

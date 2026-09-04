@@ -1,3 +1,4 @@
+mypy
 nox
 pre-commit
 python-semantic-release

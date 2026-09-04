@@ -14,9 +14,9 @@ from deadwood.client.decorators import command
 id_command = "id"
 
 
-async def init(client: TelegramClient):
-    @command(id_command)
-    async def id_command_handler(event: Message):
+async def init(client: TelegramClient) -> None:
+    @command(id_command)  # type: ignore[untyped-decorator]
+    async def id_command_handler(event: Message) -> None:
         # TODO: implement this
         # chat = (
         #     await Chat.filter(chat_id=event.chat.id)

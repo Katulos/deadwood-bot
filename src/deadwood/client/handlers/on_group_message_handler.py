@@ -8,9 +8,11 @@ from deadwood.adapters.db.models import Chat
 load_priority = 2
 
 
-async def init(client: TelegramClient):
-    @client.on(events.NewMessage(func=lambda event: event.is_group))
-    async def on_group_message_handler(event: events.NewMessage.Event):
+async def init(client: TelegramClient) -> None:
+    @client.on(events.NewMessage(func=lambda event: event.is_group))  # type: ignore[untyped-decorator]
+    async def on_group_message_handler(
+        event: events.NewMessage.Event,
+    ) -> None:
         chat = await Chat.get_or_none(chat_id=event.chat.id)
         if chat:
             updated_at = chat.updated_at

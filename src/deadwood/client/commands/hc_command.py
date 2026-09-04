@@ -17,9 +17,9 @@ from deadwood.core.services import reddit
 hc_command = "hc"
 
 
-async def init(client: TelegramClient):
-    @command(hc_command)
-    async def hc_command_handler(event: Message):
+async def init(client: TelegramClient) -> None:
+    @command(hc_command)  # type: ignore[untyped-decorator]
+    async def hc_command_handler(event: Message) -> None:
         # TODO: implement this
         # chat = (
         #     await Chat.filter(chat_id=event.chat.id)
@@ -71,8 +71,8 @@ async def init(client: TelegramClient):
         except MessageDeleteForbiddenError:
             logging.warning("Grant permission can_delete_messages!")
 
-    @cache.failover(ttl="1h")
-    @cache(ttl="24h")
+    @cache.failover(ttl="1h")  # type: ignore[untyped-decorator]
+    @cache(ttl="24h")  # type: ignore[untyped-decorator]
     async def _fetch(client: ClientSession) -> Any:
         async with client.get("https://a.4cdn.org/hc/catalog.json") as resp:
             return await resp.json()

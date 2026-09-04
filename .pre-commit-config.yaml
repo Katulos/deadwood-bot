@@ -86,6 +86,8 @@ repos:
     rev: v2.3.1
     hooks:
       - id: mypy
+        args:
+          - --config-file=.mypy.ini
         exclude: |
           (?x)(
               /__init__\.py$|
@@ -110,7 +112,7 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.5
     hooks:
-      - id: ruff
+      - id: ruff-check
         args:
           - --fix
       - id: ruff-format

@@ -1,7 +1,7 @@
 import logging
 import sys
 from collections.abc import Callable
-from typing import Any, cast
+from typing import Any
 
 import orjson
 import structlog
@@ -9,10 +9,10 @@ from structlog.typing import EventDict, Processor
 
 
 def _orjson_dumps(v: Any, *, default: Callable[[Any], Any] | None) -> str:
-    return cast(str, orjson.dumps(v, default=default).decode())
+    return orjson.dumps(v, default=default).decode()
 
 
-def _rename_event_field(_, __, event_dict: EventDict) -> EventDict:
+def _rename_event_field(_: Any, __: str, event_dict: EventDict) -> EventDict:
     if "msg" in event_dict:
         event_dict["event"] = event_dict.pop("msg")
     return event_dict
@@ -32,7 +32,7 @@ def setup_logger(
         structlog.stdlib.add_log_level,
     ]
 
-    foreign_processors = [
+    foreign_processors: list[Processor] = [
         _rename_event_field,
     ]
 
@@ -46,10 +46,10 @@ def setup_logger(
     )
 
     if sys.stderr.isatty():
-        console_processors = (
+        console_processors: list[Processor] = (
             base_processors + [_format_message] + foreign_processors
         )
-        processors = [
+        processors: list[Processor] = [
             structlog.stdlib.ProcessorFormatter.remove_processors_meta,
             structlog.processors.TimeStamper(fmt="iso", utc=True),
             structlog.dev.ConsoleRenderer(),

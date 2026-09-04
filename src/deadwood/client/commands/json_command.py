@@ -2,6 +2,7 @@ import asyncio
 import logging
 import random
 from io import BytesIO
+from typing import Any
 
 import orjson
 from telethon import TelegramClient, functions
@@ -17,9 +18,21 @@ from deadwood.client.decorators import command
 json_command = "json"
 
 
-async def init(client: TelegramClient):
-    @command(json_command)
-    async def json_command_handler(event: Message):
+def _to_serializable(obj: Any) -> Any:
+    if hasattr(obj, "to_dict"):
+        return obj.to_dict()
+    if isinstance(obj, dict):
+        return {k: _to_serializable(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_to_serializable(i) for i in obj]
+    if isinstance(obj, (str, int, float, bool)) or obj is None:
+        return obj
+    return str(obj)
+
+
+async def init(client: TelegramClient) -> None:
+    @command(json_command)  # type: ignore[untyped-decorator]
+    async def json_command_handler(event: Message) -> None:
         try:
             target_msg = (
                 await event.message.get_reply_message()
@@ -70,15 +83,3 @@ async def init(client: TelegramClient):
             logging.warning("Grant permission can_delete_messages!")
         except Exception as e:
             logging.error(e)
-
-    def _to_serializable(obj):
-        if hasattr(obj, "to_dict"):
-            return obj.to_dict()
-        elif isinstance(obj, dict):
-            return {k: _to_serializable(v) for k, v in obj.items()}
-        elif isinstance(obj, list | tuple):
-            return [_to_serializable(i) for i in obj]
-        elif isinstance(obj, str | int | float | bool) or obj is None:
-            return obj
-        else:
-            return str(obj)

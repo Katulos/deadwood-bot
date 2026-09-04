@@ -2,12 +2,10 @@ import asyncio
 import logging
 import random
 import re
-from typing import Any
+from typing import Any, cast
 
 from telethon import TelegramClient, functions
-from telethon.errors import (
-    MessageDeleteForbiddenError,
-)
+from telethon.errors import MessageDeleteForbiddenError
 from telethon.tl.custom import Message
 from telethon.tl.types import SendMessageTypingAction
 
@@ -17,19 +15,11 @@ from deadwood.core.services import reddit
 r_command = "r"
 
 
-async def init(client: TelegramClient):
-    @par_command(r_command)
-    async def r_command_handler(event: Message):
-        # TODO: implement this
-        # chat = (
-        #     await Chat.filter(chat_id=event.chat.id)
-        #     .prefetch_related("flags")
-        #     .get_or_none()
-        # )
-        # if not chat.flags.enabled:
-        #     return
+async def init(client: TelegramClient) -> None:
+    @par_command(r_command)  # type: ignore[untyped-decorator]
+    async def r_command_handler(event: Message) -> None:
         pattern = rf"(?i)^[/!\\.]{r_command} (.*?)$"
-        if re.match(pattern, event.text):
+        if event.text and re.match(pattern, event.text):
             s = event.text[3:]
             try:
                 data = await _fetch(s)
@@ -56,15 +46,15 @@ async def init(client: TelegramClient):
                     message_ids=[msg.id, event.message.id],
                 )
             except reddit.RedditException as e:
-                await event.reply(e)
+                await event.reply(str(e))
             except MessageDeleteForbiddenError:
                 logging.warning("Grant permission can_delete_messages!")
 
-    @cache.failover(ttl="1h")
-    @cache(ttl="24h")
-    async def _fetch(request) -> Any:
+    @cache.failover(ttl="1h")  # type: ignore[untyped-decorator]
+    @cache(ttl="24h")  # type: ignore[untyped-decorator]
+    async def _fetch(request: str) -> list[Any]:
         _reddit = reddit.RedditWrapper()
         media = await _reddit.fetch(request)
         if not media:
             raise reddit.RedditException("Use another tag, Luke")
-        return media
+        return cast(list[Any], media)

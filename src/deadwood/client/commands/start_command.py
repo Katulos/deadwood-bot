@@ -14,9 +14,9 @@ from deadwood.client.decorators import command
 start_command = "start"
 
 
-async def init(client: TelegramClient):
-    @command(start_command)
-    async def start_command_handler(event: Message):
+async def init(client: TelegramClient) -> None:
+    @command(start_command)  # type: ignore[untyped-decorator]
+    async def start_command_handler(event: Message) -> None:
         try:
             await client(
                 functions.messages.SetTypingRequest(

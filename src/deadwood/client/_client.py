@@ -14,6 +14,15 @@ from tortoise import Tortoise
 from deadwood.adapters.db import TORTOISE_ORM
 from deadwood.core import settings
 
+try:
+    from . import commands, handlers
+except ImportError:
+    logging.error(
+        "Could not load the plugins module. Does the directory exist in the correct location?",
+        exc_info=True,
+    )
+    sys.exit(1)
+
 _client_kwargs = {
     "session": settings.get("session"),
     "api_id": settings.get("api_id"),
@@ -48,15 +57,6 @@ if settings.get("use_proxy"):
             raise ValueError(f"Unknown proxy type: {proxy_type}")
 
 client: TelegramClient = TelegramClient(**_client_kwargs)
-
-try:
-    from . import commands, handlers
-except ImportError:
-    logging.error(
-        "Could not load the plugins module. Does the directory exist in the correct location?",
-        exc_info=True,
-    )
-    sys.exit(1)
 
 
 async def _start() -> None:

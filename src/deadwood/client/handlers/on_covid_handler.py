@@ -7,14 +7,14 @@ from deadwood.core import settings
 _pattern = r"(?i).*\b(.*covid.*|.*коронав.*|.*пандеми.*|.*ковид.*)\b"
 
 
-async def init(client: TelegramClient):
-    @client.on(
+async def init(client: TelegramClient) -> None:
+    @client.on(  # type: ignore[untyped-decorator]
         events.NewMessage(
             pattern=_pattern,
             func=lambda e: e.is_group,
         ),
     )
-    async def on_covid_handler(event: Message):
+    async def on_covid_handler(event: Message) -> None:
         # TODO: implement this
         # chat = (
         #     await Chat.filter(chat_id=event.chat.id)

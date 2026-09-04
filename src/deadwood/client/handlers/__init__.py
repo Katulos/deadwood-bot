@@ -4,9 +4,12 @@ import inspect
 import logging
 import os
 import time
+from collections.abc import Coroutine
+from types import ModuleType
+from typing import Any
 
 
-async def init(client):
+async def init(client: Any) -> None:
     plugin_dir = os.path.dirname(__file__)
 
     plugin_files = [
@@ -19,7 +22,7 @@ async def init(client):
 
     plugin_files.sort(key=str.lower)
 
-    plugins = []
+    plugins: list[ModuleType] = []
     for file in plugin_files:
         try:
             module = importlib.import_module(f"{__name__}.{file[:-3]}")
@@ -34,7 +37,9 @@ async def init(client):
         prio = _get_priority(p)
         logging.debug(f"  [{prio:3d}] {p.__name__.split('.')[-1]}")
 
-    modules = {m.__name__.split(".")[-1]: m for m in plugins}
+    modules: dict[str, ModuleType] = {
+        m.__name__.split(".")[-1]: m for m in plugins
+    }
 
     for plugin in plugins:
         coro = _get_init_coro(plugin, client=client, modules=modules)
@@ -42,7 +47,7 @@ async def init(client):
             await coro
 
 
-def _get_priority(module):
+def _get_priority(module: ModuleType) -> int:
     priority = getattr(
         module,
         "load_priority",
@@ -58,12 +63,15 @@ def _get_priority(module):
     return priority
 
 
-def _get_init_coro(plugin, **kwargs):
+def _get_init_coro(
+    plugin: ModuleType,
+    **kwargs: Any,
+) -> Coroutine[Any, Any, None] | None:
     p_init = getattr(plugin, "init", None)
     if not callable(p_init):
-        return
+        return None
 
-    result_kwargs = {}
+    result_kwargs: dict[str, Any] = {}
     sig = inspect.signature(p_init)
     for param in sig.parameters.values():
         param_name = param.name
@@ -75,12 +83,12 @@ def _get_init_coro(plugin, **kwargs):
                 plugin.__name__,
                 param_name,
             )
-            return
+            return None
 
     return _init_plugin(plugin, result_kwargs)
 
 
-async def _init_plugin(plugin, kwargs):
+async def _init_plugin(plugin: ModuleType, kwargs: dict[str, Any]) -> None:
     try:
         logging.info(f"Loading handler plugin {plugin.__name__}…")
         start = time.time()
@@ -97,7 +105,7 @@ async def _init_plugin(plugin, kwargs):
             await ret
 
 
-async def start_plugins(client, plugins):
+async def start_plugins(client: Any, plugins: list[ModuleType]) -> None:
     await asyncio.gather(
-        *(_init_plugin(client, plugin) for plugin in plugins),
+        *(_init_plugin(plugin, {"client": client}) for plugin in plugins),
     )

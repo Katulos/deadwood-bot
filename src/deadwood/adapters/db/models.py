@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from tortoise import BaseDBAsyncClient, fields
 from tortoise.models import Model
 from tortoise.signals import post_save
@@ -18,11 +20,15 @@ class Chat(Model):
 
 class ChatFlag(Model):
     id = fields.BigIntField(pk=True)
-    enabled = fields.BooleanField(default=False)
-    created_at = fields.DatetimeField(auto_now_add=True)
-    updated_at = fields.DatetimeField(auto_now=True)
+    enabled: fields.BooleanField[bool] = fields.BooleanField(default=False)
+    created_at: fields.DatetimeField[datetime] = fields.DatetimeField(
+        auto_now_add=True,
+    )
+    updated_at: fields.DatetimeField[datetime] = fields.DatetimeField(
+        auto_now=True,
+    )
 
-    chat = fields.OneToOneField(
+    chat: fields.OneToOneRelation["Chat"] = fields.OneToOneField(
         to="deadwood.Chat",
         related_name="flags",
         on_delete=fields.CASCADE,

@@ -13,11 +13,11 @@ from telethon.tl.types import (
 from deadwood.core import settings
 
 
-async def init(client: TelegramClient):
-    @client.on(
+async def init(client: TelegramClient) -> None:
+    @client.on(  # type: ignore[untyped-decorator]
         events.NewMessage(func=lambda e: e.is_group and e.message.voice),
     )
-    async def on_voice_handler(event: Message):
+    async def on_voice_handler(event: Message) -> None:
         # TODO: implement this
         # chat = (
         #     await Chat.filter(chat_id=event.chat.id)

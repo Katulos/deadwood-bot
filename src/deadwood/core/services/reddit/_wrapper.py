@@ -1,3 +1,5 @@
+from typing import Any
+
 import aiohttp
 import asyncpraw
 import asyncprawcore
@@ -17,7 +19,7 @@ class RedditWrapper:
         )
         self.reddit.read_only = True
 
-    async def fetch(self, keywords):
+    async def fetch(self, keywords: str) -> list[Any]:
         args = keywords.split()
         sub = args[0]
         if len(args) > 1:
@@ -31,7 +33,7 @@ class RedditWrapper:
         await self._close_connection()
         return subs
 
-    async def _get_list(self, sub, keywords):
+    async def _get_list(self, sub: str, keywords: str) -> list[Any]:
         try:
             if keywords:
                 subreddit = await self.reddit.subreddit(sub)
@@ -71,8 +73,8 @@ class RedditWrapper:
             raise RedditException("Something went wrong, try again") from e
         return await self._get_elements(data)
 
-    async def _get_elements(self, links: list):
-        data = []
+    async def _get_elements(self, links: list[list[str]]) -> list[list[str]]:
+        data: list[list[str]] = []
         for title, url in links:
             if url.endswith(
                 (
@@ -95,7 +97,7 @@ class RedditWrapper:
             )
         return data
 
-    async def _close_connection(self):
+    async def _close_connection(self) -> None:
         await self.reddit.close()
         await self.session.close()
 
