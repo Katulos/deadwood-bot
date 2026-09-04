@@ -13,9 +13,9 @@ class RedditWrapper:
     ) -> None:
         self.session = aiohttp.ClientSession()
         self.reddit = asyncpraw.Reddit(
-            client_id=settings.get("reddit_client_id"),
-            client_secret=settings.get("reddit_client_secret"),
-            user_agent=settings.get("reddit_user_agent"),
+            client_id=settings.get("reddit.client_id"),
+            client_secret=settings.get("reddit.client_secret"),
+            user_agent=settings.get("reddit.user_agent"),
         )
         self.reddit.read_only = True
 
