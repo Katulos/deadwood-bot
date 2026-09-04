@@ -82,6 +82,31 @@ repos:
     hooks:
       - id: add-trailing-comma
 
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v2.3.1
+    hooks:
+      - id: mypy
+        exclude: |
+          (?x)(
+              /__init__\.py$|
+              ^versions/|
+              ^tests/
+          )
+        additional_dependencies:
+          - "types-click"
+          - "types-pyyaml"
+          - "aerich[toml]>=0.9.2"
+          - "aiohttp>=3.13.3"
+          - "asyncpraw>=7.8.1"
+          - "cashews[diskcache]>=7.4.4"
+          - "dishka>=1.10.1"
+          - "dynaconf>=3.2.12"
+          - "orjson>=3.11.7"
+          - "python-socks[asyncio]>=3.0.0"
+          - "structlog>=25.5.0"
+          - "telethon>=1.42.0"
+          - "tortoise-orm>=0.25.4"
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.5
     hooks:
