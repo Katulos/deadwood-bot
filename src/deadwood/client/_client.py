@@ -9,10 +9,10 @@ from telethon.errors import (
     BotCommandInvalidError,
     TokenInvalidError,
 )
-from tortoise import Tortoise
 
-from deadwood.adapters.db import TORTOISE_ORM
 from deadwood.core import settings
+from deadwood.core.di.container import get_async_container
+from deadwood.core.di.integrations.telethon import setup_dishka
 
 try:
     from . import commands, handlers
@@ -60,10 +60,12 @@ client: TelegramClient = TelegramClient(**_client_kwargs)
 
 
 async def _start() -> None:
-    await Tortoise.init(config=TORTOISE_ORM)
-    await Tortoise.generate_schemas()
+    # await Tortoise.init(config=TORTOISE_ORM)
+    # await Tortoise.generate_schemas()
 
     try:
+        container = get_async_container()
+        setup_dishka(container, client)
         await client.connect()
 
         if settings.get("phone"):
@@ -135,7 +137,8 @@ async def _start() -> None:
             logging.warning(f"Error during client disconnect: {e}")
 
         try:
-            await Tortoise.close_connections()
+            pass
+            # await Tortoise.close_connections()
         except Exception as e:
             logging.warning(f"Error during database disconnect: {e}")
 

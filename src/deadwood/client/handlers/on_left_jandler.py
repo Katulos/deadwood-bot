@@ -2,7 +2,9 @@ import logging
 
 from telethon import TelegramClient, events
 
-from deadwood.adapters.db.models import Chat
+from deadwood.adapters.db.dao import DAO
+from deadwood.core.di.integrations.telethon import FromDishka
+from deadwood.core.models import dto
 
 
 async def init(client: TelegramClient) -> None:
@@ -16,11 +18,24 @@ async def init(client: TelegramClient) -> None:
             ),
         ),
     )
-    async def on_left_handler(event: events.ChatAction.Event) -> None:
+    async def on_left_handler(
+        event: events.ChatAction.Event,
+        dao: FromDishka[DAO],
+    ) -> None:
         try:
-            chat = await Chat.get_or_none(chat_id=event.chat.id)
+            # chat = await Chat.get_or_none(chat_id=event.chat.id)
+            # if chat:
+            #     await chat.delete()
+            chat = await dao.chat.if_exists(
+                dto.Chat(
+                    chat_id=event.chat.id,
+                ),
+            )
             if chat:
-                await chat.delete()
+                logging.info("chat exists")
+
+                # await dao.chat.delete()
+
             logging.info(f"Left chat ID[{event.chat.id}]: {event.chat.title}")
         except Exception as e:
             logging.error(e)

@@ -129,9 +129,10 @@ settings.validators.register(
     # Database
     # like a postgres://postgres:postgres@db:5432/postgres
     Validator(
-        "database_url",
-        default="sqlite://" + os.path.join(_BASE_DIR, "data/db.sqlite3"),
-        required=True,
+        "db.database_url",
+        default="sqlite+aiosqlite:///"
+        + os.path.join(_BASE_DIR, "data/db.sqlite3"),
+        apply_default_on_none=True,
     ),
     # debug
     Validator("debug", default=False, is_type_of=bool),

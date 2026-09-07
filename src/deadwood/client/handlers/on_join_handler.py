@@ -2,7 +2,9 @@ import logging
 
 from telethon import TelegramClient, events
 
-from deadwood.adapters.db.models import Chat
+from deadwood.adapters.db.dao import DAO
+from deadwood.core.di.integrations.telethon import FromDishka
+from deadwood.core.models import dto
 
 
 async def init(client: TelegramClient) -> None:
@@ -16,12 +18,12 @@ async def init(client: TelegramClient) -> None:
             ),
         ),
     )
-    async def on_join_handler(event: events.ChatAction.Event) -> None:
+    async def on_join_handler(
+        event: events.ChatAction.Event,
+        dao: FromDishka[DAO],
+    ) -> None:
         try:
-            await Chat.update_or_create(
-                chat_id=event.chat.id,
-                chat_title=event.chat.title,
-            )
+            await dao.chat.delete_chat(dto.Chat(chat_id=event.chat.id))
             logging.info(
                 f"Joined chat ID[{event.chat.id}]: {event.chat.title}",
             )

@@ -8,8 +8,10 @@ from collections.abc import Coroutine
 from types import ModuleType
 from typing import Any
 
+from telethon import TelegramClient
 
-async def init(client: Any) -> None:
+
+async def init(client: TelegramClient) -> None:
     plugin_dir = os.path.dirname(__file__)
 
     plugin_files = [

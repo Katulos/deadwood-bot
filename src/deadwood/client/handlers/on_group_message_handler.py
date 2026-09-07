@@ -1,26 +1,27 @@
-from datetime import timedelta
+import logging
 
 from telethon import TelegramClient, events
-from tortoise import timezone
 
-from deadwood.adapters.db.models import Chat
+from deadwood.adapters.db.dao import DAO
+from deadwood.core.di.integrations.telethon import FromDishka
+from deadwood.core.models import dto
 
 load_priority = 2
 
 
 async def init(client: TelegramClient) -> None:
+
     @client.on(events.NewMessage(func=lambda event: event.is_group))  # type: ignore[untyped-decorator]
     async def on_group_message_handler(
         event: events.NewMessage.Event,
+        dao: FromDishka[DAO],
     ) -> None:
-        chat = await Chat.get_or_none(chat_id=event.chat.id)
-        if chat:
-            updated_at = chat.updated_at
-            if timezone.now() - updated_at > timedelta(hours=1):
-                chat.updated_at = timezone.now()
-                await chat.save()
-        else:
-            await Chat.update_or_create(
+        await dao.chat.upsert(
+            dto.Chat(
                 chat_id=event.chat.id,
                 chat_title=event.chat.title,
-            )
+            ),
+        )
+        logging.info(
+            f"Joined chat ID[{event.chat.id}]: {event.chat.title}",
+        )

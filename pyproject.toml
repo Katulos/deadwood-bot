@@ -24,8 +24,8 @@ classifiers = [
 ]
 requires-python = ">= 3.12"
 dependencies = [
-    "aerich[toml]>=0.9.2",
     "aiohttp>=3.13.3",
+    "alembic>=1.19.2",
     "asyncpraw>=7.8.1",
     "cashews[diskcache]>=7.4.4",
     "click>=8.5.0",
@@ -34,9 +34,9 @@ dependencies = [
     "orjson>=3.11.7",
     "python-socks[asyncio]>=3.0.0",
     "rich>=14.3.2",
+    "sqlalchemy[aiosqlite]>=2.0.52",
     "structlog>=25.5.0",
     "telethon>=1.42.0",
-    "tortoise-orm>=0.25.4",
 ]
 
 [tool.setuptools.dynamic]
