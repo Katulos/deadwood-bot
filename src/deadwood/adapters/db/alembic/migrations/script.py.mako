@@ -7,15 +7,15 @@ Create Date: ${create_date}
 """
 import typing as t
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 ${imports if imports else ""}
 
 # revision identifiers, used by Alembic.
 revision: str = ${repr(up_revision)}
-down_revision: t.Union[str, None] = ${repr(down_revision)}
-branch_labels: t.Union[str, t.Sequence[str], None] = ${repr(branch_labels)}
-depends_on: t.Union[str, t.Sequence[str], None] = ${repr(depends_on)}
+down_revision: str | None = ${repr(down_revision)}
+branch_labels: str | t.Sequence[str] | None = ${repr(branch_labels)}
+depends_on: str | t.Sequence[str] | None = ${repr(depends_on)}
 
 
 def upgrade() -> None:
